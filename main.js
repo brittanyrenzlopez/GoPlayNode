@@ -1,10 +1,36 @@
-
+// LASTFM: 393f6ffbf12f2269f84b5b7240397dbc
 
 
 
 
 const songkickURL = "https://api.songkick.com/api/3.0/events.json?apikey=Lpl57W3wcb5NEdNk";
 var concertInfo = [];
+
+//function getTopArtistsfromLastFM(callback) {
+ // let URL = `http://ws.audioscrobbler.com/2.0/?method=chart.gettopartists&api_key=393f6ffbf12f2269f84b5b7240397dbc&format=json`;
+
+ // $.getJSON(URL, callback);
+ // console.log("top artists");
+//}
+
+//function displayTopArtistsfromLastFM(data) {
+  //console.log(data, "display top artists");
+  //  $("#popularArtists").html(`<p>${data.artists.artist.name}</p>`);
+//}
+
+function getBiofromLastFM(searchArtist, callback) {
+  console.log('LASTFM function');
+  let URL = `http://ws.audioscrobbler.com/2.0/?method=artist.getinfo&artist=${searchArtist}&api_key=393f6ffbf12f2269f84b5b7240397dbc&format=json`;
+
+  $.getJSON(URL, callback);
+  console.log(URL);
+}
+
+function displayBioFromLastFM(data) {
+  console.log(data, 'data');
+  $("#artistBio").html(`<p>${data.artist.bio.summary}</p>`);
+}
+
 
 // AJAX call to Songkick
 function getDataFromSongkickApi(searchArtist, callback) {
@@ -21,7 +47,7 @@ function getDataFromSongkickApi(searchArtist, callback) {
     	 let eventInfo = data.resultsPage.totalEntries;
    console.log(data);
    if (eventInfo == 0) {
-   	$("#concert-cont").append('<h1 style="color:red">No Upcoming Events</h1>')
+   	$("#concert-cont").append('<h1 id="upcoming" style="color:whitesmoke">No Upcoming Events</h1>')
    }
 
    $.each(data["resultsPage"]["results"]["event"], function(i, entry){
@@ -72,8 +98,13 @@ function lose() {
 	document.getElementById('goPlay').style.display="";
 	document.getElementById('searching').style.display="";
 	document.getElementById('search-btn').style.display="";
+  document.getElementById('footer').style.display="";
+  var music = document.querySelector('audio');
+
+
 	$('#concert-cont').empty();
 	$('.search').val('');
+
 };
 
 
@@ -91,9 +122,12 @@ $(`#search-btn`).click(event =>{
 	document.getElementById('goPlay').style.display="none";
 	document.getElementById('searching').style.display="none";
 	document.getElementById('search-btn').style.display="none";
+  document.getElementById('footer').style.display="none";
    }
 	$(`#artistName`).html(`${userText.val()}`);
 	getDataFromSongkickApi(searchArtist, displaySongkickData);
+  getBiofromLastFM(searchArtist, displayBioFromLastFM);
+  getTopArtistsfromLastFM(displayTopArtistsfromLastFM);
 });
 }
 
