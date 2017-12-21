@@ -8,6 +8,7 @@
 const songkickURL = "https://api.songkick.com/api/3.0/events.json?apikey=Lpl57W3wcb5NEdNk";
 var concertInfo = [];
 
+// Get Top Artists to display on front page
 function getTopArtistsfromLastFM(callback) {
   let URL = `http://ws.audioscrobbler.com/2.0/?method=chart.gettopartists&api_key=393f6ffbf12f2269f84b5b7240397dbc&format=json`;
 
@@ -20,11 +21,13 @@ function displayTopArtistsfromLastFM(data) {
       //$.each(data.artists.artist, function(i, element){
       for(var i = 0; i <= 10; i++) {
       let popName = data.artists.artist[i].name;
-      $("#popularArtists").append("<li><a>" + popName +"</a></li>");
+      $("#popularArtists").append("<li style='list-style-type: none;'><a onclick='topArtistListen();' class='topID'>" + popName +"</a></li>");
     };
 
 };
 
+
+// Get Artist Bio
 function getBiofromLastFM(searchArtist, callback) {
   console.log('LASTFM function');
   let URL = `http://ws.audioscrobbler.com/2.0/?method=artist.getinfo&artist=${searchArtist}&api_key=393f6ffbf12f2269f84b5b7240397dbc&format=json`;
@@ -38,6 +41,24 @@ function displayBioFromLastFM(data) {
   $("#artistBio").html(`<p>${data.artist.bio.summary}</p>`);
 }
 
+
+// Get Similar Artists
+function getSimilarArtists(searchArtist, callback) {
+  let URL = `http://ws.audioscrobbler.com/2.0/?method=artist.getsimilar&artist=${searchArtist}&api_key=393f6ffbf12f2269f84b5b7240397dbc&format=json`;
+
+  $.getJSON(URL, callback);
+  console.log("similar artists");
+}
+
+function displaySimilarArtists(data) {
+  console.log(data, "display top artists");
+      //$.each(data.artists.artist, function(i, element){
+      for(var i = 0; i <= 10; i++) {
+      let simName = data.similarartists.artist[i].name;
+      $("#similar").append("<li style='list-style-type: none;'><a>" + simName +"</a></li>");
+    };
+
+};
 
 // AJAX call to Songkick
 function getDataFromSongkickApi(searchArtist, callback) {
@@ -58,7 +79,7 @@ function getDataFromSongkickApi(searchArtist, callback) {
    }
 
    $.each(data["resultsPage"]["results"]["event"], function(i, entry){
-        $("#concert-cont").append('<li><a href="' + entry.uri+'">'+entry.displayName +'</a></li>');
+        $("#concert-cont").append('<li style="list-style-type: none;"><a href="' + entry.uri+'">'+entry.displayName +'</a></li>');
     })},
     timeout: 5000,
     error: function() {
@@ -136,8 +157,26 @@ $(`#search-btn`).click(event =>{
 	$(`#artistName`).html(`${userText.val()}`);
 	getDataFromSongkickApi(searchArtist, displaySongkickData);
   getBiofromLastFM(searchArtist, displayBioFromLastFM);
+  getSimilarArtists(searchArtist, displaySimilarArtists);
 });
 }
+
+function topArtistListen(){
+const searchArtist = $('.topID').text();
+console.log(searchArtist);
+$('.topID').click(function(){
+   $(`artistName`).html($(this).val());
+  document.getElementById('container').style.display="";
+  document.getElementById('goPlay').style.display="none";
+  document.getElementById('searching').style.display="none";
+  document.getElementById('search-btn').style.display="none";
+  document.getElementById('footer').style.display="none";
+  document.getElementById('popularArtists').style.display="none";
+  getDataFromSongkickApi(searchArtist, displaySongkickData);
+  getBiofromLastFM(searchArtist, displayBioFromLastFM);
+});
+}
+
 
 
 // element store
@@ -179,4 +218,7 @@ fetch(`https://itunes.apple.com/search?term=${searchText}`)
 });
 
 $(getTopArtistsfromLastFM(displayTopArtistsfromLastFM));
+
 $(listen);
+
+$(topArtistListen());
