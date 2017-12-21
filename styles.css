@@ -33,23 +33,25 @@ html, body {
 }
 
 #popularArtists {
+	margin-bottom: -40px;
 	color: whitesmoke;
 	line-height: 150%;
 	font-family: Century Gothic;
 	top:0;
 	margin: 0 auto;
-	bottom: 0px;
 	border: 2px solid #404040;
 	background-color: #303030;
 	width: 70%;
   	min-height: 70px;
-  	height: 100px;
+  	height: 200px;
   	overflow-y: scroll;
-	margin-top: 5px;
-	margin-bottom: 5px;
 	padding-bottom: 25px;
 	padding-left: 5px;
 	padding-right: 5px;
+}
+
+#popularArtists a:hover {
+	cursor: pointer;
 }
 
 #artistBio {
@@ -150,6 +152,13 @@ a {
 #artistName {
 	color: gold;
 	font-size: 300%;
+}
+
+h2 {
+	color: gold;
+	font-size: 120%;
+	text-align: center;
+	font-family: Century Gothic;
 }
 
 h3 {

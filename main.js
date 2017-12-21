@@ -1,22 +1,29 @@
 // LASTFM: 393f6ffbf12f2269f84b5b7240397dbc
-
+// Genius: client secret pRXtcWKwZOPy7Mg-Ys81ttaeifWoOqQ1Y_ZqNsQhfqeW5SBguJ8F3qAU84ZNd1OIcopNHMZgekpPIkeAnSH_Sg
+// Genius client id WeI3R_rkfZQlSvNi2Qmee8dFRRFvZtu-PgLcFbnPqomBbpVKOfrccakzsjmrwwAg
+// Genius client access token t5gFCfFhOstTCio_v48kUJYqajqXVczv91YGQvWiR_4RgsJBpD-eOtV8gEjYqqD4
 
 
 
 const songkickURL = "https://api.songkick.com/api/3.0/events.json?apikey=Lpl57W3wcb5NEdNk";
 var concertInfo = [];
 
-//function getTopArtistsfromLastFM(callback) {
- // let URL = `http://ws.audioscrobbler.com/2.0/?method=chart.gettopartists&api_key=393f6ffbf12f2269f84b5b7240397dbc&format=json`;
+function getTopArtistsfromLastFM(callback) {
+  let URL = `http://ws.audioscrobbler.com/2.0/?method=chart.gettopartists&api_key=393f6ffbf12f2269f84b5b7240397dbc&format=json`;
 
- // $.getJSON(URL, callback);
- // console.log("top artists");
-//}
+  $.getJSON(URL, callback);
+  console.log("top artists");
+}
 
-//function displayTopArtistsfromLastFM(data) {
-  //console.log(data, "display top artists");
-  //  $("#popularArtists").html(`<p>${data.artists.artist.name}</p>`);
-//}
+function displayTopArtistsfromLastFM(data) {
+  console.log(data, "display top artists");
+      //$.each(data.artists.artist, function(i, element){
+      for(var i = 0; i <= 10; i++) {
+      let popName = data.artists.artist[i].name;
+      $("#popularArtists").append("<li><a>" + popName +"</a></li>");
+    };
+
+};
 
 function getBiofromLastFM(searchArtist, callback) {
   console.log('LASTFM function');
@@ -99,6 +106,7 @@ function lose() {
 	document.getElementById('searching').style.display="";
 	document.getElementById('search-btn').style.display="";
   document.getElementById('footer').style.display="";
+  document.getElementById('popularArtists').style.display="";
   var music = document.querySelector('audio');
 
 
@@ -123,11 +131,11 @@ $(`#search-btn`).click(event =>{
 	document.getElementById('searching').style.display="none";
 	document.getElementById('search-btn').style.display="none";
   document.getElementById('footer').style.display="none";
+  document.getElementById('popularArtists').style.display="none";
    }
 	$(`#artistName`).html(`${userText.val()}`);
 	getDataFromSongkickApi(searchArtist, displaySongkickData);
   getBiofromLastFM(searchArtist, displayBioFromLastFM);
-  getTopArtistsfromLastFM(displayTopArtistsfromLastFM);
 });
 }
 
@@ -170,5 +178,5 @@ fetch(`https://itunes.apple.com/search?term=${searchText}`)
 });
 });
 
-
+$(getTopArtistsfromLastFM(displayTopArtistsfromLastFM));
 $(listen);
