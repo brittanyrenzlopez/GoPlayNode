@@ -79,7 +79,7 @@ function getDataFromSongkickApi(searchArtist, callback) {
    }
 
    $.each(data["resultsPage"]["results"]["event"], function(i, entry){
-        $("#concert-cont").append('<li style="list-style-type: none;"><a href="' + entry.uri+'">'+entry.displayName +'</a></li>');
+        $("#concert-cont").append('<li style="list-style-type: none;"><a target="_blank" href="' + entry.uri+'">'+entry.displayName +'</a></li>');
     })},
     timeout: 5000,
     error: function() {
