@@ -1,0 +1,433 @@
+
+html, body {
+  overflow: auto;
+  background: url(https://i.imgur.com/vwvE41M.jpg) no-repeat 50% 50%;
+  background-size: cover;
+  background-attachment: fixed;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+
+
+/* Content Display */
+#container {
+  opacity: 0.95;
+  position: absolute;
+  display: table;
+  padding:0;
+  top:0;
+  left:0;
+  right: 0;
+  background-color: #202020;
+  margin-top: 20px;
+  width: 90%;
+  min-height: 80px;
+  overflow: hidden;
+  margin-left: auto;
+  margin-right: auto;
+  padding-bottom: 10px;
+}
+
+#contentinfo {
+  position: fixed;
+}
+
+#topTen {
+  position: relative;
+  bottom: 300px;
+  color: whitesmoke;
+}
+
+#popularArtists {
+  position: relative;
+  bottom: 300px;
+  color: whitesmoke;
+  line-height: 150%;
+  font-family: Century Gothic;
+  margin: 0 auto;
+  border: 2px solid #404040;
+  background-color: #202020;
+  width: 70%;
+  min-height: 70px;
+  height: 260px;
+  padding-bottom: 30px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#popularArtists a:hover {
+  cursor: pointer;
+}
+
+#artistBio {
+  color: whitesmoke;
+  line-height: 150%;
+  font-family: Century Gothic;
+  top:0;
+  margin: 0 auto;
+  bottom: 0px;
+  border: 2px solid #404040;
+  background-color: #303030;
+  width: 70%;
+    min-height: 70px;
+    height: 100px;
+    overflow-y: scroll;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  padding-bottom: 25px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#similar {
+  margin-bottom: -40px;
+  color: whitesmoke;
+  line-height: 150%;
+  font-family: Century Gothic;
+  top:0;
+  margin: 0 auto;
+  border: 2px solid #404040;
+  background-color: #303030;
+  width: 70%;
+    min-height: 70px;
+    height: 200px;
+    overflow-y: scroll;
+  padding-bottom: 25px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#similar a:hover {
+  cursor: pointer;
+}
+
+#artistBio a:link {
+  color: gold;
+}
+
+#artistBio a:hover {
+  color: #D4AF37;
+}
+
+#concert-cont {
+  top:0;
+  margin: 0 auto;
+  bottom: 0px;
+  border: 2px solid #404040;
+  background-color: #202020;
+  width: 70%;
+    min-height: 100px;
+    height: 300px;
+    overflow-y: scroll;
+  margin-top: 12px;
+  padding-bottom: 25px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#upcoming {
+  font-size: 50px;
+}
+
+/* Close Button */
+.closing {
+  height: 30px;
+  width: 30px;
+  margin-top: 5px;
+  margin-left: 5px;
+  font-size: 20px;
+  text-align: center;
+  background-color: gold;
+  display: flex;
+  justify-content: right;
+}
+
+.closing:hover {
+  background-color: rgba(255,255,255, 0.3);
+
+}
+
+/* GoPlay screen */
+.intro {
+  height: 100%;
+  width: 100%;
+  margin: auto;
+  display: table;
+  top: 0;
+}
+
+.inner {
+  display: table-cell;
+  vertical-align: middle;
+  width: 100%;
+  max-width: none;
+}
+
+/* Links */
+a {
+  color: whitesmoke;
+  font-family: Century Gothic;
+  font-size: 25px;
+}
+
+.content {
+  max-width: 500px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+/*Search Name*/
+#artistName {
+  color: gold;
+  font-size: 300%;
+}
+
+h2 {
+  color: gold;
+  font-size: 120%;
+  text-align: center;
+  font-family: Century Gothic;
+  text-shadow: 2px 2px    #202020;
+}
+
+h3 {
+  color: gold;
+  font-size: 120%;
+  text-shadow:  2px 2px    #202020;
+  font-family: Century Gothic;
+}
+
+.content h1 {
+  font-family: Century Gothic;
+    letter-spacing: 14px;
+    text-align: center;
+    color: whitesmoke;
+    border-radius: 0px;
+  text-shadow: 0px 0px 16px rgba(255,255,255,0.8);
+  font-size: 500%;
+  font-weight: 900;
+}
+
+.content h4 {
+  font-family: Century Gothic;
+  top: 30px;
+  letter-spacing: 10px;
+  text-align: center;
+  color: #202020;
+  text-shadow:  1px 1px    #fff2cc;
+  border-radius: 0px;
+
+}
+
+/*Search Button*/
+
+#search-btn {
+  position: relative;
+  top: -170px;
+  font-size: 14px;
+  font-family: Helvetica;
+  line-height: 120%;
+  color: whitesmoke;
+  background-color: #202020;
+  border: 1px solid #202020;
+  padding: 10px 12px;
+  text-decoration: none;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color ease 400ms;
+}
+
+#search-btn:hover {
+  color: black;
+  background-color: rgba(245, 190, 24, 0.58);
+}
+
+/* Search Form*/
+.search-form {
+      max-width:380px;
+      margin:225px auto;
+      }
+ ::-webkit-input-placeholder { 
+    color:   #202020;
+}
+
+footer {
+  text-align: center;
+}
+
+
+input.search {
+      text-align: center;
+      outline:0;
+      border: 1px solid #202020;
+      background:rgba(255,255,255, 0.3);
+      transition: background-color ease 400ms;
+      color: black;
+      width: 120%;
+      left: -10%;
+      position: relative;
+      top: -180px;
+      border-radius: 5px;
+      font-size: 28px;
+      font-family: Helvetica;
+      box-shadow: 0px 0px 300px black;
+    }
+
+ a:link {
+  text-decoration: none;
+  display: inline-block;
+  margin-bottom: 15px;
+ }
+
+ a:hover {
+  color: gold;
+  text-shadow: 0px 0px 6px rgba(255,255,255,0.7);
+ }
+
+/*media query*/
+@media screen and (max-width: 768px) {
+  .content h1 {
+    font-size: 250%;
+  }
+}
+
+#signUp {
+  font-size: 40px;
+  color: gold;
+}
+
+label {
+  font-family: Century Gothic;
+  font-size: 20px;
+  color: gold;
+}
+
+.inputType {
+  font-family: Century Gothic;
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+
+/* Set a style for all buttons */
+button {
+  font-family: Century Gothic;
+    background-color: gold;
+    color: black;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+}
+
+form-control:hover {
+  text-shadow: 0px 0px 16px rgba(255,255,255,0.8);
+}
+
+/* Extra styles for the cancel button */
+.cancelbtn {
+    padding: 14px 20px;
+    font-family: Century Gothic;
+    background-color: #202020;
+}
+
+.signupbtn {
+  font-family: Century Gothic;
+  background-color: gold;
+  color: black;
+}
+
+/* Float cancel and signup buttons and add an equal width */
+.cancelbtn,.signupbtn {
+    float: left;
+    width: 50%;
+}
+
+/* Add padding to container elements */
+.container {
+    padding: 16px;
+}
+
+/* Clear floats */
+.clearfix::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
+/* Change styles for cancel button and signup button on extra small screens */
+@media screen and (max-width: 300px) {
+    .cancelbtn, .signupbtn {
+        width: 100%;
+    }
+}
+
+.container li {
+   display: inline;
+  padding-right: 30px;
+}
+
+/* Everything but the jumbotron gets side spacing for mobile first views */
+.header,
+.marketing,
+.footer {
+  padding-right: 1rem;
+  padding-left: 1rem;
+}
+
+/* Custom page header */
+.header {
+  padding-bottom: 1rem;
+  border-bottom: .05rem solid #e5e5e5;
+}
+/* Make the masthead heading the same height as the navigation */
+.header h3 {
+  margin-top: 0;
+  margin-bottom: 0;
+  line-height: 3rem;
+}
+
+/* Custom page footer */
+.footer {
+  padding-top: 1.5rem;
+  color: #777;
+  border-top: .05rem solid #e5e5e5;
+}
+
+/* Customize container */
+@media (min-width: 48em) {
+  .container {
+    max-width: 46rem;
+  }
+}
+
+/* Responsive: Portrait tablets and up */
+@media screen and (min-width: 48em) {
+  /* Remove the padding we set earlier */
+  .header,
+  .marketing,
+  .footer {
+    padding-right: 0;
+    padding-left: 0;
+  }
+  /* Space out the masthead */
+  .header {
+    margin-bottom: 2rem;
+  }
+}
+
+.page-header{
+  margin-top: 0;
+}
+
+footer{
+  margin-top: 40px;
+}
