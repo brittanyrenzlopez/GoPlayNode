@@ -1,7 +1,7 @@
 
 html, body {
   overflow: auto;
-  background: url(https://i.imgur.com/vwvE41M.jpg) no-repeat 50% 50%;
+  background: url(https://i.imgur.com/DkVYTXa.jpg) no-repeat 50% 50%;
   background-size: cover;
   background-attachment: fixed;
   margin: 0;
@@ -12,6 +12,32 @@ html, body {
   padding-bottom: 1.5rem;
 }
 
+#find {
+   font-size: 55px;
+  color: white;
+  text-shadow: 0 0 5px black, 0 0 10px #fff, 0 0 20px #ffe100, 0 0 30px #ffe100, 0 0 40px #ffe100, 0 0 55px #ffe100, 0 0 75px #ffe100;
+}
+
+#Play {
+  color: gold; 
+  font-family: 'Helvetica Neue', sans-serif;
+  font-size: 100px;
+  font-weight: bold;
+  letter-spacing: -1px;
+  line-height: 1;
+  text-align: left;
+  margin-top: -80px;
+  margin-left: -60px;
+  text-shadow: 6px 6px 0px rgba(0,0,0,0.2);
+}
+
+.mb-5 {
+  margin-left: -60px;
+}
+
+.btn btn-outline btn-xl js-scroll-trigger {
+  margin-bottom: 80px;
+}
 
 /* Content Display */
 #container {
@@ -37,12 +63,13 @@ html, body {
 }
 
 #topTen {
-  position: relative;
-  bottom: 300px;
-  color: whitesmoke;
+  font-size: 45px;
+  color: white;
+  text-shadow: 0 0 5px black, 0 0 10px #fff, 0 0 20px #ffe100, 0 0 30px #ffe100, 0 0 40px #ffe100, 0 0 55px #ffe100, 0 0 75px #ffe100;
 }
 
 #popularArtists {
+  display: inline-block;
   position: relative;
   bottom: 300px;
   color: whitesmoke;
@@ -50,17 +77,18 @@ html, body {
   font-family: Century Gothic;
   margin: 0 auto;
   border: 2px solid #404040;
-  background-color: #202020;
-  width: 70%;
+  background-color: #0c0c0c;
+  width: 55%;
   min-height: 70px;
-  height: 260px;
-  padding-bottom: 30px;
+  padding-bottom: 10px;
   padding-left: 5px;
   padding-right: 5px;
 }
 
 #popularArtists a:hover {
   cursor: pointer;
+  color: gold;
+  transform: scale(1.2);
 }
 
 #artistBio {
@@ -243,7 +271,9 @@ h3 {
 
 #search-btn:hover {
   color: black;
-  background-color: rgba(245, 190, 24, 0.58);
+  background-color: #ffe100;
+  border:none;
+  box-shadow: 0 0 5px black, 0 0 4px #fff, 0 0 5px #ffe100, 0 0 6px #ffe100, 0 0 7px #ffe100, 0 0 8px #ffe100, 0 0 10px #ffe100;
 }
 
 /* Search Form*/
@@ -271,7 +301,7 @@ input.search {
       left: -10%;
       position: relative;
       top: -180px;
-      border-radius: 5px;
+      border-radius: 10px;
       font-size: 28px;
       font-family: Helvetica;
       box-shadow: 0px 0px 300px black;
@@ -286,6 +316,7 @@ input.search {
  a:hover {
   color: gold;
   text-shadow: 0px 0px 6px rgba(255,255,255,0.7);
+  transform: scale(1.1);
  }
 
 /*media query*/
@@ -431,3 +462,4 @@ form-control:hover {
 footer{
   margin-top: 40px;
 }
+

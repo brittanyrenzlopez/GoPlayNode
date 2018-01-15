@@ -1,8 +1,9 @@
 var express = require('express');
 var router = express.Router();
+var User = require("../models/user");
 
 // Get Homepage
-router.get('/', ensureAuthenticated, function(req, res){
+router.get('/', function(req, res){
 	res.render('index');
 });
 
@@ -14,6 +15,11 @@ function ensureAuthenticated(req, res, next){
 		res.redirect('/users/login');
 	}
 }
+
+// User Profile
+router.get("/users/:id", function(req, res) {
+
+});
 
 module.exports = router;
 

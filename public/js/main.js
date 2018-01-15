@@ -6,15 +6,13 @@ function getTopArtistsfromLastFM(callback) {
   let URL = `http://ws.audioscrobbler.com/2.0/?method=chart.gettopartists&api_key=393f6ffbf12f2269f84b5b7240397dbc&format=json`;
 
   $.getJSON(URL, callback);
-  console.log("top artists");
 }
 
 function displayTopArtistsfromLastFM(data) {
-  console.log(data, "display top artists");
-      //$.each(data.artists.artist, function(i, element){
+  console.log(data, "display top artists");      //$.each(data.artists.artist, function(i, element){
       for(var i = 0; i <= 10; i++) {
       let popName = data.artists.artist[i].name;
-      $("#popularArtists").append("<li style='list-style-type: none;'><a onclick='topArtistListen();' class='topID'>" + popName +"</a></li>");
+      $("#popularArtists").append("<li style='list-style-type: none; display:block; margin: 10px 0;'><a onclick='topArtistListen();' class='topID'>" + popName +"</a></li>");
     };
 
 };
@@ -30,7 +28,6 @@ function getBiofromLastFM(searchArtist, callback) {
 }
 
 function displayBioFromLastFM(data) {
-  console.log(data, 'data');
   $("#artistBio").html(`<p>${data.artist.bio.summary}</p>`);
 }
 

@@ -2,65 +2,60 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>GoPlay</title>
+  <title>Play Domain</title>
   <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha256-cCueBR6CsyA4/9szpPfrX3s49M9vUU5BgtiJj06wt/s=" crossorigin="anonymous"></script>
 
-  <link rel="stylesheet" href="style.css">
+      <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Plugin CSS -->
+    <link rel="stylesheet" href="device-mockups/device-mockups.min.css">
+
+    <!-- Custom styles for this template -->
+    <link href="css/new-age.min.css" rel="stylesheet">
+
 </head>
 
-<body>
+<body id="page-top">
 <main role="main">
 
-<section class="intro">
-  <div class="inner">
-      <div class="content" role="contentinfo">
-        <h1 id="goPlay">GoPlay</h1>
-        <h4 id="subtitle">Discover Music</h4>
+    <header class="masthead">
+      <div class="container h-100">
+        <div class="row h-100">
+          <div class="col-lg-7 my-auto">
+            <div class="header-content mx-auto">
+              <h1 id="Play">Play Domain</h1>
+              <h1 class="mb-5">Discover Your Music.</h1>
+              <a href="#download" class="btn btn-outline btn-xl js-scroll-trigger">Start Looking Now!</a>
+            </div>
 
-<!-- Search for Artist-->
-         <form class="search-form" role = "search">
+          </div>
+          <div class="col-lg-5 my-auto">
+            <div class="device-container">
+              <div class="device-mockup iphone6_plus portrait white">
+                
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+                 
+<section class="download bg-primary text-center" id="download">
+      <h2 id="find"> Find an Artist </h2>
+     <form class="search-form" role = "search">
     <input type="text" label for="searching" class="search" id="searching" placeholder="search for artist">
     <button type="button" id="search-btn">Search</button>
   </form>
 
-  <h2 id="topTen">Top Ten Artists</h2>
+
+
   <div id = "popularArtists">
+    <h2 id="topTen">Top Ten Artists</h2>
     <!-- holds popular artists -->
   </div>
 
-<!-- Content Display -->
-    <div id="container" style="display:none;" role="contentinfo">
-      <button type="button" class="closing" onclick="lose();">&times;</button>
-      <h1 id="artistName">Artist Name</h1> <button>Add to Favorites</button>
-
-      <h3 id="topTrack">Top Tracks</h3>
-
-      <div id="tracks">
-        <!-- Holds Top Tracks -->
-      </div>
-
-      <h3 id="bio">Artist Bio</h3>
-      <div id="artistBio">
-        <!-- Hold artist bio -->
-      </div>
-
-      <h3>Similar Artists</h3>
-      <div id="similar">
-    
-    </div>
-
-<!-- Upcoming Events-->
-<h3 aria-label="Event List">Upcoming Events</h3>
-
-      <div id = "concert-cont" role="contentinfo">
-        <!-- Holds upcoming events-->
-      </div> 
-    </div>
-  </div>
-</div>
-
 </section>
-
 
 
 </main>

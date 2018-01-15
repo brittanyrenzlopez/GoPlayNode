@@ -17,6 +17,9 @@ var UserSchema = mongoose.Schema({
 	email: {
 		type: String
 	},
+	avatar: {
+		type: String
+	},
 	name: {
 		type: String
 	}

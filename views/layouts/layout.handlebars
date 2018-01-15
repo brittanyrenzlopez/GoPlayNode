@@ -1,9 +1,16 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>GoPlay</title>
+	<title>Play Domain</title>
 	<link rel="stylesheet" href="/css/bootstrap.css" />
 	<link rel="stylesheet" href="/css/style.css" />
+   <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Plugin CSS -->
+    <link rel="stylesheet" href="device-mockups/device-mockups.min.css">
+
+    <!-- Custom styles for this template -->
+    <link href="css/new-age.min.css" rel="stylesheet">
 </head>
 <body>
 	<div class="container">
@@ -12,6 +19,7 @@
           <ul class="nav nav-pills pull-right">
             {{#if user}}
               <li role="presentation"><a href="/">Home</a></li>
+              <li role="presentation"><a href="/">Profile</a></li>
               <li role="presentation"><a href="/users/logout">Logout</a></li>
             {{else}}
             <li role="presentation"><a href="/">Home</a></li>
@@ -42,7 +50,7 @@
 
 
       <footer class="footer">
-        <p>&copy; GoPlay 2017</p>
+        <p>&copy; Play Domain 2017</p>
       </footer>
 
     </div> <!-- /container -->
