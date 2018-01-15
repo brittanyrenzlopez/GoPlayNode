@@ -5,7 +5,7 @@ var LocalStrategy = require('passport-local').Strategy;
 
 var User = require('../models/user');
 
-// Resgister Route
+// Register Route
 router.get('/register', function(req, res){
 	res.render('register');
 });
@@ -16,6 +16,11 @@ module.exports = router;
 // Login Route
 router.get('/login', function(req, res){
 	res.render('login');
+});
+
+// Profile Route
+router.get('/show', function(req, res){
+	res.render('show');
 });
 
 module.exports = router;
@@ -101,6 +106,11 @@ router.post('/login',
     res.redirect('/');
   });
 
+router.post('/show',
+  passport.authenticate('local', {successRedirect:'/', failureRedirect:'/users/login',failureFlash: true}),
+  function(req, res) {
+    res.redirect('/show');
+  });
 
 router.get('/logout', function(req, res){
 	req.logout();
@@ -109,5 +119,7 @@ router.get('/logout', function(req, res){
 
 	res.redirect('/');
 });
+
+
 
 module.exports = router;

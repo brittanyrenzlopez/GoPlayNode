@@ -208,6 +208,13 @@ a {
   text-align: center;
 }
 
+#discover {
+  font-size: 20px;
+  margin-top: 40px;
+  font-style: italic;
+  line-height: 30px;
+}
+
 /*Search Name*/
 #artistName {
   color: gold;
