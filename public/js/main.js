@@ -132,8 +132,8 @@ function lose() {
 function listen(){
 $(`#search-btn`).click(event =>{
   event.preventDefault();
-  const searchArtist = $('.search').val();
-  const userText = $(`.search-form`).find(`.search`);
+  var searchArtist = $('.search').val();
+  var userText = $(`.search-form`).find(`.search`);
    if($('.search').val() == ''){
       alert('You did not enter an artist');
       return false;
@@ -144,7 +144,6 @@ $(`#search-btn`).click(event =>{
   document.getElementById('search-btn').style.display="none";
   document.getElementById('footer').style.display="none";
   document.getElementById('popularArtists').style.display="none";
-  document.getElementById('topTen').style.display="none";
 
    }
   $(`#artistName`).html(`${userText.val()}`);
@@ -193,7 +192,7 @@ fetch(`https://itunes.apple.com/search?term=${searchText}`)
 })
 .then (function(json) {   
 
-    for (var i = 0; i < 2; i++) {
+    for (var i = 0; i < 4; i++) {
         let name = json.results[i].artistName;
         let songName = json.results[i].trackName;
         let audio2 = json.results[i].previewUrl;
@@ -209,6 +208,113 @@ fetch(`https://itunes.apple.com/search?term=${searchText}`)
     }
 });
 });
+
+window.onscroll = function() {scrollFunction()};
+
+function scrollFunction() {
+    if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+        document.getElementById("myBtn").style.display = "block";
+    } else {
+        document.getElementById("myBtn").style.display = "none";
+    }
+}
+
+// When the user clicks on the button, scroll to the top of the document
+function topFunction() {
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
+}
+
+const app = {};
+
+app.getArists = (artist) => $.ajax({
+  url: 'https://api.spotify.com/v1/search',
+  method: 'GET',
+  dataType: 'json',
+  data: {
+    type: 'artist',
+    q: artist
+  }
+});
+
+app.getAristsAlbums = (id) => $.ajax({
+  url: `https://api.spotify.com/v1/artists/${id}/albums`,
+  method: 'GET',
+  dataType: 'json',
+  data: {
+    album_type: 'album',
+  }
+});
+
+app.getAlbumTracks = (id) => $.ajax({
+  url: `https://api.spotify.com/v1/albums/${id}/tracks`,
+  method: 'GET',
+  dataType: 'json'
+});
+
+app.getAlbums = function(artists) {
+  let albums = artists.map(artist => app.getAristsAlbums(artist.id));
+  $.when(...albums)
+    .then((...albums) => {
+      let albumIds = albums
+        .map(a => a[0].items)
+        .reduce((prev,curr) => [...prev,...curr] ,[])
+        .map(album => app.getAlbumTracks(album.id));
+
+      app.getTracks(albumIds);
+    });
+};
+
+app.getTracks = function(tracks) {
+  $.when(...tracks)
+    .then((...tracks) => {
+      tracks = tracks
+        .map(getDataObject)
+        .reduce((prev,curr) => [...prev,...curr],[]); 
+      const randomPlayList = getRandomTracks(50,tracks);
+      app.createPlayList(randomPlayList);
+    })
+};
+
+app.createPlayList = function(songs) {
+  const baseUrl = 'https://embed.spotify.com/?theme=white&uri=spotify:trackset:My Playlist:';
+  songs = songs.map(song => song.id).join(',');
+  $('.loader').removeClass('show');
+  $('.playlist').append(`<iframe src="${baseUrl + songs}" height="400"></iframe>`);
+}
+
+app.init = function() {
+  $('form').on('submit', function(e) {
+    e.preventDefault();
+    let artists = $('input[type=search]').val();
+    $('.loader').addClass('show');
+    artists = artists
+      .split(',')
+      .map(app.getArists);
+    
+    $.when(...artists)
+      .then((...artists) => {
+        artists = artists.map(a => a[0].artists.items[0]);
+        console.log(artists);
+        app.getAlbums(artists);
+      });
+  });
+
+}
+
+const getDataObject = arr => arr[0].items;
+
+function getRandomTracks(num, tracks) {
+  const randomResults = [];
+  for(let i = 0; i < num; i++) {
+    randomResults.push(tracks[ Math.floor(Math.random() * tracks.length) ])
+  }
+  return randomResults;
+}
+
+$(app.init);
+
+
 
 $(getTopArtistsfromLastFM(displayTopArtistsfromLastFM));
 

@@ -25,7 +25,7 @@
           <div class="col-lg-7 my-auto">
             <div class="header-content mx-auto">
               <h1 id="Play">Play Domain</h1>
-              <h1 class="mb-5" id="discover">Discover, follow, and generate playlists based on<br>your favorite artists.</h1>
+              <h1 class="mb-5" id="discover">Discover, follow, and generate playlists based<br>on your favorite artists.</h1>
               <a href="#download" class="btn btn-outline btn-xl js-scroll-trigger">Get Started Now!</a>
             </div>
 
@@ -41,13 +41,34 @@
         </div>
       </div>
     </header>
+
+<button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
                  
 <section class="download bg-primary text-center" id="download">
-      <h2 id="find"> Find an Artist </h2>
+      <h2 id="find">Find an Artist</h2>
      <form class="search-form" role = "search">
     <input type="text" label for="searching" class="search" id="searching" placeholder="enter artist name">
-    <button type="button" id="search-btn">Search</button>
+    <button type="button" class="btn btn-outline btn-xl" id="search-btn">Search</button>
   </form>
+
+<!-- Content Display -->
+    <div id="container" style="display:none;" role="contentinfo">
+      <button type="button" class="closing" onclick="lose();">&times;</button>
+      <button id="add">Save Playlist</button>
+
+      <div class="playlist">
+        <div class="loader">
+          <div class="inner-circle"></div>
+        </div>
+      </div>
+
+      <div id="tracks">
+
+        <!-- Holds Top Tracks -->
+
+      </div> 
+    </div>
+
 
 
 

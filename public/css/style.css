@@ -26,7 +26,7 @@ html, body {
   letter-spacing: -1px;
   line-height: 1;
   text-align: left;
-  margin-top: -80px;
+  margin-top: -60px;
   margin-left: -60px;
   text-shadow: 6px 6px 0px rgba(0,0,0,0.2);
 }
@@ -50,7 +50,7 @@ html, body {
   right: 0;
   background-color: #202020;
   margin-top: 20px;
-  width: 90%;
+  width: 60%;
   min-height: 80px;
   overflow: hidden;
   margin-left: auto;
@@ -163,8 +163,8 @@ html, body {
 
 /* Close Button */
 .closing {
-  height: 30px;
-  width: 30px;
+  height: 20px;
+  width: 20px;
   margin-top: 5px;
   margin-left: 5px;
   font-size: 20px;
@@ -172,6 +172,17 @@ html, body {
   background-color: gold;
   display: flex;
   justify-content: right;
+}
+
+#add {
+  margin-bottom: 40px;
+  width: 170px;
+  height:50px;
+  border-radius: 30px;
+}
+
+#add:hover {
+  background-color: rgba(255,255,255, 0.3);
 }
 
 .closing:hover {
@@ -209,10 +220,11 @@ a {
 }
 
 #discover {
-  font-size: 20px;
+  font-size: 25px;
   margin-top: 40px;
   font-style: italic;
   line-height: 30px;
+  text-shadow: -1px -1px 15px rgba(255, 255, 0, 0.52);
 }
 
 /*Search Name*/
@@ -237,7 +249,7 @@ h3 {
 }
 
 .content h1 {
-  font-family: Century Gothic;
+    font-family: Century Gothic;
     letter-spacing: 14px;
     text-align: center;
     color: whitesmoke;
@@ -313,6 +325,10 @@ input.search {
       font-family: Helvetica;
       box-shadow: 0px 0px 300px black;
     }
+
+input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 1000px white inset !important;
+}
 
  a:link {
   text-decoration: none;
@@ -470,3 +486,16 @@ footer{
   margin-top: 40px;
 }
 
+​#myBtn {
+  display: none;
+  position: fixed;
+  bottom: 20px;
+  right: 30px;
+  border: none;
+  outline: none;
+  background-color: red;
+  color: white;
+  cursor: pointer;
+  padding: 15px;
+  border-radius: 10px;
+}
