@@ -227,96 +227,94 @@ function topFunction() {
 
 const app = {};
 
-app.getArists = (artist) => $.ajax({
-  url: 'https://api.spotify.com/v1/search',
-  method: 'GET',
-  dataType: 'json',
-  data: {
-    type: 'artist',
-    q: artist
-  }
-});
+// Allow user to enter names
 
-app.getAristsAlbums = (id) => $.ajax({
-  url: `https://api.spotify.com/v1/artists/${id}/albums`,
-  method: 'GET',
-  dataType: 'json',
-  data: {
-    album_type: 'album',
-  }
-});
-
-app.getAlbumTracks = (id) => $.ajax({
-  url: `https://api.spotify.com/v1/albums/${id}/tracks`,
-  method: 'GET',
-  dataType: 'json'
-});
-
-app.getAlbums = function(artists) {
-  let albums = artists.map(artist => app.getAristsAlbums(artist.id));
-  $.when(...albums)
-    .then((...albums) => {
-      let albumIds = albums
-        .map(a => a[0].items)
-        .reduce((prev,curr) => [...prev,...curr] ,[])
-        .map(album => app.getAlbumTracks(album.id));
-
-      app.getTracks(albumIds);
-    });
-};
-
-app.getTracks = function(tracks) {
-  $.when(...tracks)
-    .then((...tracks) => {
-      tracks = tracks
-        .map(getDataObject)
-        .reduce((prev,curr) => [...prev,...curr],[]); 
-      const randomPlayList = getRandomTracks(50,tracks);
-      app.createPlayList(randomPlayList);
-    })
-};
-
-app.createPlayList = function(songs) {
-  const baseUrl = 'https://embed.spotify.com/?theme=white&uri=spotify:trackset:My Playlist:';
-  songs = songs.map(song => song.id).join(',');
-  $('.loader').removeClass('show');
-  $('.playlist').append(`<iframe src="${baseUrl + songs}" height="400"></iframe>`);
-}
-
-app.init = function() {
-  $('form').on('submit', function(e) {
+app.events = function() {
+  $('#search-btn').on('click', function(e){
     e.preventDefault();
-    let artists = $('input[type=search]').val();
-    $('.loader').addClass('show');
-    artists = artists
-      .split(',')
-      .map(app.getArists);
-    
-    $.when(...artists)
-      .then((...artists) => {
-        artists = artists.map(a => a[0].artists.items[0]);
-        console.log(artists);
-        app.getAlbums(artists);
-      });
+    let artists = $('input[type=text]').val();
+    console.log(artists);
   });
+};
 
-}
+// Go to Spotify and get artist
 
-const getDataObject = arr => arr[0].items;
+// IDs to get albums
 
-function getRandomTracks(num, tracks) {
-  const randomResults = [];
-  for(let i = 0; i < num; i++) {
-    randomResults.push(tracks[ Math.floor(Math.random() * tracks.length) ])
-  }
-  return randomResults;
-}
+// Get tracks
+
+// Build playlist
+
+app.init = function () {
+  app.events();
+};
+
+
 
 $(app.init);
 
+function SpotifyLogin() {
+    
+    function login(callback) {
+        var CLIENT_ID = '812eeebca2a145988f7f5099e1761808';
+        var REDIRECT_URI = 'http://localhost:7000/';
+        function getLoginURL(scopes) {
+            return 'https://accounts.spotify.com/authorize?client_id=' + CLIENT_ID +
+              '&redirect_uri=' + encodeURIComponent(REDIRECT_URI) +
+              '&scope=' + encodeURIComponent(scopes.join(' ')) +
+              '&response_type=token';
+        }
+        
+        var url = getLoginURL([
+            'user-read-email'
+        ]);
+        
+        var width = 450,
+            height = 730,
+            left = (screen.width / 2) - (width / 2),
+            top = (screen.height / 2) - (height / 2);
+    
+        window.addEventListener("message", function(event) {
+            var hash = JSON.parse(event.data);
+            if (hash.type == 'access_token') {
+                callback(hash.access_token);
+            }
+        }, false);
+        
+        var w = window.open(url,
+                            'Spotify',
+                            'menubar=no,location=no,resizable=no,scrollbars=no,status=no, width=' + width + ', height=' + height + ', top=' + top + ', left=' + left
+                           );
+        
+    }
 
+    function getUserData(accessToken) {
+        return $.ajax({
+            url: 'https://api.spotify.com/v1/me',
+            headers: {
+               'Authorization': 'Bearer ' + accessToken
+            }
+        });
+    }
+
+    var templateSource = document.getElementById('result-template').innerHTML,
+        resultsPlaceholder = document.getElementById('result'),
+        loginButton = document.getElementById('btn-login');
+    
+    loginButton.addEventListener('click', function() {
+        login(function(accessToken) {
+            getUserData(accessToken)
+                .then(function(response) {
+                    loginButton.style.display = 'none';
+                    resultsPlaceholder.innerHTML = template(response);
+                });
+            });
+    });
+    
+};
 
 $(getTopArtistsfromLastFM(displayTopArtistsfromLastFM));
+
 
 $(listen);
 
