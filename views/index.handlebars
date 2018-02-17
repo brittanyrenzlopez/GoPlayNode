@@ -5,8 +5,7 @@
   <title>Play Domain</title>
   <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha256-cCueBR6CsyA4/9szpPfrX3s49M9vUU5BgtiJj06wt/s=" crossorigin="anonymous"></script>
 
-      <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-
+  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
 
     <!-- Custom styles for this template -->
@@ -24,7 +23,7 @@
           <div class="col-lg-7 my-auto">
             <div class="header-content mx-auto">
               <h1 id="Play">Play Domain</h1>
-              <h1 class="mb-5" id="discover">Discover, follow, and generate playlists based<br>on your favorite artists.</h1>
+              <h1 class="mb-5" id="discover">Generate playlists based on your favorite artists!</h1>
               <a href="#download" class="btn btn-outline btn-xl js-scroll-trigger">Get Started Now!</a>
             </div>
 
@@ -42,15 +41,20 @@
     </header>
 
 
+<button class="btn btn-outline btn-xl" id="btn-login" onclick="SpotifyLogin();">Login to Spotify</button>
+
 
 <button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
+
                  
 <section class="download bg-primary text-center" id="download">
-      <h2 id="find">Find an Artist</h2>
+      <h2 id="find">Find Your Artist</h2>
      <form class="search-form" role = "search">
     <input type="text" label for="searching" class="search" id="searching" placeholder="enter artist name">
     <button type="button" class="btn btn-outline btn-xl" id="search-btn">Search</button>
   </form>
+
+
 
 <!-- Content Display -->
     <div id="container" style="display:none;" role="contentinfo">
@@ -63,11 +67,6 @@
         </div>
       </div>
 
-      <div id="tracks">
-
-        <!-- Holds Top Tracks -->
-
-      </div> 
     </div>
 
 

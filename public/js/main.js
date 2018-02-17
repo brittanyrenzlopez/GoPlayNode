@@ -1,3 +1,8 @@
+//Spotify Client ID: 812eeebca2a145988f7f5099e1761808
+//Spotify Client Secret: 04cc698bfb7b4e7ab14ec5600cac73a2
+
+
+
 const songkickURL = "https://api.songkick.com/api/3.0/events.json?apikey=Lpl57W3wcb5NEdNk";
 var concertInfo = [];
 
@@ -17,98 +22,6 @@ function displayTopArtistsfromLastFM(data) {
 
 };
 
-
-// Get Artist Bio
-function getBiofromLastFM(searchArtist, callback) {
-  console.log('LASTFM function');
-  let URL = `http://ws.audioscrobbler.com/2.0/?method=artist.getinfo&artist=${searchArtist}&api_key=393f6ffbf12f2269f84b5b7240397dbc&format=json`;
-
-  $.getJSON(URL, callback);
-  console.log(URL);
-}
-
-function displayBioFromLastFM(data) {
-  $("#artistBio").html(`<p>${data.artist.bio.summary}</p>`);
-}
-
-
-// Get Similar Artists
-function getSimilarArtists(searchArtist, callback) {
-  let URL = `http://ws.audioscrobbler.com/2.0/?method=artist.getsimilar&artist=${searchArtist}&api_key=393f6ffbf12f2269f84b5b7240397dbc&format=json`;
-
-  $.getJSON(URL, callback);
-  console.log("similar artists");
-}
-
-function displaySimilarArtists(data) {
-  console.log(data, "display top artists");
-      //$.each(data.artists.artist, function(i, element){
-      for(var i = 0; i <= 10; i++) {
-      let simName = data.similarartists.artist[i].name;
-      $("#similar").append("<li style='list-style-type: none;'><a>" + simName +"</a></li>");
-    };
-
-};
-
-// AJAX call to Songkick
-function getDataFromSongkickApi(searchArtist, callback) {
-  console.info("Inside SongkickAPI function");
- 
-  const settings = {
-    url: songkickURL,
-    dataType: "json",
-    type: "GET",
-    data: {
-      artist_name: searchArtist
-    },
-    success: function (data){ 
-       let eventInfo = data.resultsPage.totalEntries;
-   console.log(data);
-   if (eventInfo == 0) {
-    $("#concert-cont").append('<h1 id="upcoming" style="color:whitesmoke">No Upcoming Events</h1>')
-   }
-
-   $.each(data["resultsPage"]["results"]["event"], function(i, entry){
-        $("#concert-cont").append('<li style="list-style-type: none;"><a target="_blank" href="' + entry.uri+'">'+entry.displayName +'</a></li>');
-    })},
-    timeout: 5000,
-    error: function() {
-      alert('Error retrieving data');
-    }
-  };
-  $.ajax(settings);
-};
-
-// callback function
-function displaySongkickData(data) {
-
-  const songkickData = data.resultsPage.results.event;
-  const searchArtist = $('.search').val();
-
-;
-  if (songkickData != undefined) {
-    const results = songkickData.map((item, index) => renderConcertResults(item));
-    $('.js-search-results').html(results); // Stores Songkick data in global variable, concertInfo
-    concertInfo = songkickData.map((item, index) => {
-    console.log(item);
-      return item;
-
-    });
-    $('#concert-cont').show();
-    location.href = "#results";
-  }
-}
-
-// renders results to page
-function renderConcertResults(result) {
-  return `
-   <div class="result-container" role="contentinfo">
-     <h3 class="render-text"><a href="${result.uri}" target="_blank">${result.displayName}</a></h3>
-     <h4 class="render-text">${result.start.date}</h4>
-     <p class="render-text"><strong>${result.venue.displayName}</strong>, ${result.location.city}</p>
-   </div>
- `;
-}
 
 // close out display
 function lose() {
@@ -133,7 +46,7 @@ function listen(){
 $(`#search-btn`).click(event =>{
   event.preventDefault();
   var searchArtist = $('.search').val();
-  var userText = $(`.search-form`).find(`.search`);
+  var userText = $('input[type=text]').val();
    if($('.search').val() == ''){
       alert('You did not enter an artist');
       return false;
@@ -146,7 +59,7 @@ $(`#search-btn`).click(event =>{
   document.getElementById('popularArtists').style.display="none";
 
    }
-  $(`#artistName`).html(`${userText.val()}`);
+  $(`#artistName`).html(`${userText}`);
   getDataFromSongkickApi(searchArtist, displaySongkickData);
   getBiofromLastFM(searchArtist, displayBioFromLastFM);
   getSimilarArtists(searchArtist, displaySimilarArtists);
@@ -219,13 +132,15 @@ function scrollFunction() {
     }
 }
 
-// When the user clicks on the button, scroll to the top of the document
+// When user clicks on the button, scroll to the top of the document
 function topFunction() {
     document.body.scrollTop = 0;
     document.documentElement.scrollTop = 0;
 }
 
 const app = {};
+
+app.apiUrl = "https://api.spotify.com/v1";
 
 // Allow user to enter names
 
@@ -234,24 +149,120 @@ app.events = function() {
     e.preventDefault();
     let artists = $('input[type=text]').val();
     console.log(artists);
+
+    //let artistSplit = artists.split(',');
+    //let look = artistSplit.map(artistName => app.artistSearch(artistName));
+
+
+    app.retreiveArtistInfo(artists);
+
+
   });
 };
 
 // Go to Spotify and get artist
+app.artistSearch = (artistName) => $.ajax({
+  url: `${app.apiUrl}/search`,
+  method:'GET',
+  dataType: 'json',
+  data: {
+    q: artistName,
+    type: 'artist',
+    access_token: "BQAJmEA1xlbSST_K3A20Ju2QM3hD82H9bILw0ODpyoxZ6yGtPyzLirph9r291Nz_KEdP6dtH-l58PLOxo1wS6HMTRfgQKEBnUDtcxGViLCaZ_jLVJm7ReHpFg_PKqw48t0l9kdPw6bLqNRFLsrt57q3_wvMtzw"
+  }
+});
 
 // IDs to get albums
+app.getArtistAlbums = (artistId) => $.ajax({
+  url: `{app.apiUrl}/artists/${id}/albums`,
+  method: 'GET',
+  dataType: 'json',
+  data: {
+    album_type: 'album'
+  }
+});
 
 // Get tracks
+app.getArtistTracks = (id) => $.ajax({
+  url: `${app.apiUrl}/albums/${id}/tracks`,
+  method: 'GET',
+  dataType: 'json',
+
+});
+
 
 // Build playlist
+
+app.buildPlayList = function(tracks){
+  $.when(...tracks)
+    .then((...tracksResults) => {
+      tracksResults = tracksResults.map(getFirstElement)
+        .map(item => item.items)
+        .reduce(flatten,[])
+        .map(item => item.id);
+
+        const randomTracks = [];
+
+        for(let i=0; i <30; i++) {
+          randomTracks.push(getRandomTrack(tracksResults));
+        }
+
+        const baseUrl = `https://embed.spotify.com/?theme=white&uri=spotify:trackset:My Playlist:${randomTracks.join()}`;
+        songs = songs.map(song => song.id).join(',');
+
+
+        $('.playlist').html(`<iframe src="${baseUrl}" height="400"></iframe>`);
+  });
+
+};
 
 app.init = function () {
   app.events();
 };
 
 
+//
+app.retreiveArtistInfo = function(artists) {
+    $.when(...artists)
+      .then((...results) => {
+  
+          let finalResults = results.map(getFirstElement)
+            //.map(res => res.artists.items[0].id)
+            //.map(id => app.getArtistAlbums(id));
+            console.log(finalResults);
+          
+          app.retreiveArtistTracks(finalResults);
+
+      });
+};
+
+app.retreiveArtistTracks = function(artistAlbums) {
+  $.when(...artistAlbums)
+    .then((...albums) => {
+      albumIds = albums.map(getFirstElement)
+        .map(res => res.items)
+        .reduce(flatten, [])
+        .map(album => album.id)
+        .map(ids => app.getArtistTracks(ids));
+      app.buildPlayList(albumIds);
+
+        
+    });
+}
+
+const getFirstElement = (item) => item[0];
+
+const flatten = (prev,curr) => [...prev,...curr];
+
+const getRandomTrack = (trackArray) => {
+  const randoNum = Math.floor(Math.random() * trackArray.length);
+  return trackArray[randoNum];
+}
+
 
 $(app.init);
+
+// Log in to Spotify
 
 function SpotifyLogin() {
     
@@ -268,6 +279,8 @@ function SpotifyLogin() {
         var url = getLoginURL([
             'user-read-email'
         ]);
+
+        console.log(url);
         
         var width = 450,
             height = 730,
@@ -281,10 +294,11 @@ function SpotifyLogin() {
             }
         }, false);
         
-        var w = window.open(url,
+        var w = window.location.assign(url,
                             'Spotify',
                             'menubar=no,location=no,resizable=no,scrollbars=no,status=no, width=' + width + ', height=' + height + ', top=' + top + ', left=' + left
                            );
+        console.log(url);
         
     }
 
@@ -296,9 +310,8 @@ function SpotifyLogin() {
             }
         });
     }
-
-    var templateSource = document.getElementById('result-template').innerHTML,
-        resultsPlaceholder = document.getElementById('result'),
+   
+    var resultsPlaceholder = document.getElementById('result'),
         loginButton = document.getElementById('btn-login');
     
     loginButton.addEventListener('click', function() {
@@ -314,7 +327,6 @@ function SpotifyLogin() {
 };
 
 $(getTopArtistsfromLastFM(displayTopArtistsfromLastFM));
-
 
 $(listen);
 
