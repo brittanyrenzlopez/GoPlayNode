@@ -83,45 +83,6 @@ $('.topID').click(function(){
 }
 
 
-
-// element store
-let form = document.querySelector(".search-form");
-let resultShow = document.querySelector("#tracks");
-let button = document.querySelector("#search-btn");
-let input = document.querySelector(".search");
-let audio = document.querySelector("audio");
-
-//button event to get user input
-button.addEventListener("click", function(event) {
-    event.preventDefault();
-
-    let searchText = document.querySelector(".search").value;
-
-    resultShow.textContent = "";
-// fetch request called after button event
-fetch(`https://itunes.apple.com/search?term=${searchText}`)  
-.then (function (data){
-    return data.json();
-})
-.then (function(json) {   
-
-    for (var i = 0; i < 4; i++) {
-        let name = json.results[i].artistName;
-        let songName = json.results[i].trackName;
-        let audio2 = json.results[i].previewUrl;
-// append results to page
-        let show = `
-        <div class = "topTracks" role ="contentinfo">
-            <h3 style="color:whitesmoke;"> ${songName} </h3>
-            <audio controls class = "play">
-            <source value="" src="${audio2}" type="audio/mpeg">
-        </div>
-        `;
-        resultShow.insertAdjacentHTML("beforeEnd", show);
-    }
-});
-});
-
 window.onscroll = function() {scrollFunction()};
 
 function scrollFunction() {
@@ -138,129 +99,126 @@ function topFunction() {
     document.documentElement.scrollTop = 0;
 }
 
+// Spotify build playlist
+
 const app = {};
 
-app.apiUrl = "https://api.spotify.com/v1";
-
-// Allow user to enter names
-
-app.events = function() {
-  $('#search-btn').on('click', function(e){
-    e.preventDefault();
-    let artists = $('input[type=text]').val();
-    console.log(artists);
-
-    //let artistSplit = artists.split(',');
-    //let look = artistSplit.map(artistName => app.artistSearch(artistName));
-
-
-    app.retreiveArtistInfo(artists);
-
-
-  });
-};
-
-// Go to Spotify and get artist
-app.artistSearch = (artistName) => $.ajax({
-  url: `${app.apiUrl}/search`,
-  method:'GET',
+app.getArists = (artist) => $.ajax({
+  url: 'https://api.spotify.com/v1/search',
+  method: 'GET',
   dataType: 'json',
   data: {
-    q: artistName,
     type: 'artist',
-    access_token: "BQAJmEA1xlbSST_K3A20Ju2QM3hD82H9bILw0ODpyoxZ6yGtPyzLirph9r291Nz_KEdP6dtH-l58PLOxo1wS6HMTRfgQKEBnUDtcxGViLCaZ_jLVJm7ReHpFg_PKqw48t0l9kdPw6bLqNRFLsrt57q3_wvMtzw"
+    q: artist,
+    access_token: "BQATESh6mg2Y8CxsgVUNaE-LVK-hNyCgoEkvAwnbUsHv7aHyAt0IEJBi1SyRcQ_lJ8QyyjikRJOd3b7BvBlJBO_-1LoFdgXCreJgwLyvLVtEqPWedIOeA6PSL-IYQJ5sgdcD_87gnrIlV6aw-jEPErkqqQfB6MC8"
+  },
+  success: function showArist (data) {
+    console.log(data.artists.items[0]['id']);
   }
 });
 
-// IDs to get albums
+// Get Albums
 app.getArtistAlbums = (artistId) => $.ajax({
-  url: `{app.apiUrl}/artists/${id}/albums`,
+  url: `https://api.spotify.com/v1/artists/${artistId}/albums`,
   method: 'GET',
   dataType: 'json',
   data: {
-    album_type: 'album'
+    album_type: 'album',
+    access_token: "BQATESh6mg2Y8CxsgVUNaE-LVK-hNyCgoEkvAwnbUsHv7aHyAt0IEJBi1SyRcQ_lJ8QyyjikRJOd3b7BvBlJBO_-1LoFdgXCreJgwLyvLVtEqPWedIOeA6PSL-IYQJ5sgdcD_87gnrIlV6aw-jEPErkqqQfB6MC8"
   }
 });
 
-// Get tracks
+// Get Tracks from Albums
 app.getArtistTracks = (id) => $.ajax({
-  url: `${app.apiUrl}/albums/${id}/tracks`,
+  url: `https://api.spotify.com/v1/albums/${id}/tracks`,
   method: 'GET',
   dataType: 'json',
-
+  data: {
+    access_token: "BQATESh6mg2Y8CxsgVUNaE-LVK-hNyCgoEkvAwnbUsHv7aHyAt0IEJBi1SyRcQ_lJ8QyyjikRJOd3b7BvBlJBO_-1LoFdgXCreJgwLyvLVtEqPWedIOeA6PSL-IYQJ5sgdcD_87gnrIlV6aw-jEPErkqqQfB6MC8"
+  }
 });
 
 
-// Build playlist
-
-app.buildPlayList = function(tracks){
-  $.when(...tracks)
-    .then((...tracksResults) => {
-      tracksResults = tracksResults.map(getFirstElement)
-        .map(item => item.items)
-        .reduce(flatten,[])
-        .map(item => item.id);
-
-        const randomTracks = [];
-
-        for(let i=0; i <30; i++) {
-          randomTracks.push(getRandomTrack(tracksResults));
-        }
-
-        const baseUrl = `https://embed.spotify.com/?theme=white&uri=spotify:trackset:My Playlist:${randomTracks.join()}`;
-        songs = songs.map(song => song.id).join(',');
-
-
-        $('.playlist').html(`<iframe src="${baseUrl}" height="400"></iframe>`);
-  });
-
-};
-
-app.init = function () {
-  app.events();
-};
-
-
-//
-app.retreiveArtistInfo = function(artists) {
-    $.when(...artists)
+// Gets album IDS
+app.retreiveArtistInfo = function(look) {
+    // spreads array
+    $.when(...look)
       .then((...results) => {
-  
-          let finalResults = results.map(getFirstElement)
-            //.map(res => res.artists.items[0].id)
-            //.map(id => app.getArtistAlbums(id));
-            console.log(finalResults);
-          
-          app.retreiveArtistTracks(finalResults);
+        // most relevant match
+        results = results.map(getFirstElement)
+        .map((res) => res.artists.items[0].id)
+        .map(id => app.getArtistAlbums(id));
+
+        app.retreiveArtistTracks(results);
 
       });
 };
 
 app.retreiveArtistTracks = function(artistAlbums) {
   $.when(...artistAlbums)
-    .then((...albums) => {
-      albumIds = albums.map(getFirstElement)
-        .map(res => res.items)
-        .reduce(flatten, [])
-        .map(album => album.id)
-        .map(ids => app.getArtistTracks(ids));
-      app.buildPlayList(albumIds);
+  .then((...albums) => {
+    albumIds = albums.map(getFirstElement)
+      .map(res => res.items)
+      //flatten and concat arrays
+      .reduce(flatten,[])
+      .map(album => album.id)
+      .map(ids => app.getArtistTracks(ids));
+    app.buldPlayList(albumIds);
 
+  });
+};
+
+app.buldPlayList = function(tracks) {
+  $.when(...tracks)
+    .then((...tracksResults) => {
+      tracksResults = tracksResults.map(getFirstElement)
+        .map(item => item.items)
+        .reduce(flatten,[])
+        .map(item => item.id);
         
-    });
-}
+        const randomTracks = [];
+        for(let i=0; i< 30; i++) {
+          randomTracks.push(getRandomTrack(tracksResults));
+        }
 
+        const baseUrl = `https://embed.spotify.com/?theme=white&uri=spotify:trackset:My Playlist:${randomTracks.join()}`;
+        
+        $('.playlist').html(`<iframe src="${baseUrl}" height="400"></iframe>`);
+
+    });
+};
+
+// reusable function that returns first element
 const getFirstElement = (item) => item[0];
 
-const flatten = (prev,curr) => [...prev,...curr];
+const flatten = (prev, curr) => [...prev,...curr];
 
+// take track array
 const getRandomTrack = (trackArray) => {
   const randoNum = Math.floor(Math.random() * trackArray.length);
   return trackArray[randoNum];
 }
 
 
+// Allow user to enter artist names
+app.init = function() {
+  $('#search-btn').on('click', function(e) {
+    e.preventDefault();
+    let artists = $('input[type=text]').val();
+    console.log(artists);
+    $('.loader').addClass('show');
+    // create array
+    artists = artists.split(',');
+    // create array of calls
+    let look = artists.map(artist => app.getArists(artist));   
+    // pass look
+    app.retreiveArtistInfo(look);
+      });
+  };
+
+
 $(app.init);
+
 
 // Log in to Spotify
 
