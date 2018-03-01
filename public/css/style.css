@@ -70,12 +70,12 @@ html, body {
 
 #popularArtists {
   display: inline-block;
-  position: relative;
-  bottom: 300px;
+  position: static;
   color: whitesmoke;
   line-height: 150%;
   font-family: Century Gothic;
   margin: 0 auto;
+  margin-top: -300px;
   border: 2px solid #404040;
   background-color: #0c0c0c;
   width: 55%;

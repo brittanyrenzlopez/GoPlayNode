@@ -6,6 +6,7 @@
 const songkickURL = "https://api.songkick.com/api/3.0/events.json?apikey=Lpl57W3wcb5NEdNk";
 var concertInfo = [];
 
+
 // Get Top Artists to display on front page
 function getTopArtistsfromLastFM(callback) {
   let URL = `http://ws.audioscrobbler.com/2.0/?method=chart.gettopartists&api_key=393f6ffbf12f2269f84b5b7240397dbc&format=json`;
@@ -26,10 +27,8 @@ function displayTopArtistsfromLastFM(data) {
 // close out display
 function lose() {
   document.getElementById('container').style.display="none";
-  document.getElementById('goPlay').style.display="";
   document.getElementById('searching').style.display="";
   document.getElementById('search-btn').style.display="";
-  document.getElementById('footer').style.display="";
   document.getElementById('popularArtists').style.display="";
   document.getElementById('topTen').style.display="";
   var music = document.querySelector('audio');
@@ -68,7 +67,6 @@ $(`#search-btn`).click(event =>{
 
 function topArtistListen(){
 const searchArtist = $('.topID').text();
-console.log(searchArtist);
 $('.topID').click(function(){
    $(`artistName`).html($(this).val());
   document.getElementById('container').style.display="";
@@ -102,6 +100,9 @@ function topFunction() {
 // Spotify build playlist
 
 const app = {};
+let userId = "";
+let playlistId = "";
+
 
 app.getArists = (artist) => $.ajax({
   url: 'https://api.spotify.com/v1/search',
@@ -110,10 +111,7 @@ app.getArists = (artist) => $.ajax({
   data: {
     type: 'artist',
     q: artist,
-    access_token: "BQATESh6mg2Y8CxsgVUNaE-LVK-hNyCgoEkvAwnbUsHv7aHyAt0IEJBi1SyRcQ_lJ8QyyjikRJOd3b7BvBlJBO_-1LoFdgXCreJgwLyvLVtEqPWedIOeA6PSL-IYQJ5sgdcD_87gnrIlV6aw-jEPErkqqQfB6MC8"
-  },
-  success: function showArist (data) {
-    console.log(data.artists.items[0]['id']);
+    access_token: "BQAhpq_J1j5_EeoyYqzPMK1qJ7MaRlo28Uj6Q0CBIxraRNk9HscWWc_UV2kSxvmj8JNFiD-vt9ZrgIilIqcs81NwA2-8hMRwPLnHsjOzOEf8GL3RsMgAH4KAoLs5g7c0AAT1XmDXZVX3MJFWX4gor6njie2DxAF1pASiC2KE59olrZWN3mHGxvxKon4WU646JDUp5P29n7tQFqxxvZhGKGbPx1Q3S-55naYnxk69Gz6tT2SSuE2e-g"
   }
 });
 
@@ -124,7 +122,7 @@ app.getArtistAlbums = (artistId) => $.ajax({
   dataType: 'json',
   data: {
     album_type: 'album',
-    access_token: "BQATESh6mg2Y8CxsgVUNaE-LVK-hNyCgoEkvAwnbUsHv7aHyAt0IEJBi1SyRcQ_lJ8QyyjikRJOd3b7BvBlJBO_-1LoFdgXCreJgwLyvLVtEqPWedIOeA6PSL-IYQJ5sgdcD_87gnrIlV6aw-jEPErkqqQfB6MC8"
+    access_token: "BQAhpq_J1j5_EeoyYqzPMK1qJ7MaRlo28Uj6Q0CBIxraRNk9HscWWc_UV2kSxvmj8JNFiD-vt9ZrgIilIqcs81NwA2-8hMRwPLnHsjOzOEf8GL3RsMgAH4KAoLs5g7c0AAT1XmDXZVX3MJFWX4gor6njie2DxAF1pASiC2KE59olrZWN3mHGxvxKon4WU646JDUp5P29n7tQFqxxvZhGKGbPx1Q3S-55naYnxk69Gz6tT2SSuE2e-g"
   }
 });
 
@@ -134,12 +132,12 @@ app.getArtistTracks = (id) => $.ajax({
   method: 'GET',
   dataType: 'json',
   data: {
-    access_token: "BQATESh6mg2Y8CxsgVUNaE-LVK-hNyCgoEkvAwnbUsHv7aHyAt0IEJBi1SyRcQ_lJ8QyyjikRJOd3b7BvBlJBO_-1LoFdgXCreJgwLyvLVtEqPWedIOeA6PSL-IYQJ5sgdcD_87gnrIlV6aw-jEPErkqqQfB6MC8"
+    access_token: "BQAhpq_J1j5_EeoyYqzPMK1qJ7MaRlo28Uj6Q0CBIxraRNk9HscWWc_UV2kSxvmj8JNFiD-vt9ZrgIilIqcs81NwA2-8hMRwPLnHsjOzOEf8GL3RsMgAH4KAoLs5g7c0AAT1XmDXZVX3MJFWX4gor6njie2DxAF1pASiC2KE59olrZWN3mHGxvxKon4WU646JDUp5P29n7tQFqxxvZhGKGbPx1Q3S-55naYnxk69Gz6tT2SSuE2e-g"
   }
 });
 
 
-// Gets album IDS
+// Gets albums from artists
 app.retreiveArtistInfo = function(look) {
     // spreads array
     $.when(...look)
@@ -150,10 +148,44 @@ app.retreiveArtistInfo = function(look) {
         .map(id => app.getArtistAlbums(id));
 
         app.retreiveArtistTracks(results);
-
+        //results are JSON of albums from artists, pass to rtracks
       });
 };
 
+app.getUsername = function(id) {
+  var url = 'https://api.spotify.com/v1/me';
+  let accesstoken = 'BQAhpq_J1j5_EeoyYqzPMK1qJ7MaRlo28Uj6Q0CBIxraRNk9HscWWc_UV2kSxvmj8JNFiD-vt9ZrgIilIqcs81NwA2-8hMRwPLnHsjOzOEf8GL3RsMgAH4KAoLs5g7c0AAT1XmDXZVX3MJFWX4gor6njie2DxAF1pASiC2KE59olrZWN3mHGxvxKon4WU646JDUp5P29n7tQFqxxvZhGKGbPx1Q3S-55naYnxk69Gz6tT2SSuE2e-g';
+  $.ajax(url, {
+    dataType: 'json',
+    headers: {
+      'Authorization': 'Bearer ' + accesstoken
+    },
+    success: function(data) {
+      userId = (data.id);
+      console.log(userId);
+      app.createPlaylist(userId);
+    }
+  });
+}
+
+
+app.createPlaylist = function(userId) {
+  var url = `https://api.spotify.com/v1/users/${userId}/playlists?access_token=BQAhpq_J1j5_EeoyYqzPMK1qJ7MaRlo28Uj6Q0CBIxraRNk9HscWWc_UV2kSxvmj8JNFiD-vt9ZrgIilIqcs81NwA2-8hMRwPLnHsjOzOEf8GL3RsMgAH4KAoLs5g7c0AAT1XmDXZVX3MJFWX4gor6njie2DxAF1pASiC2KE59olrZWN3mHGxvxKon4WU646JDUp5P29n7tQFqxxvZhGKGbPx1Q3S-55naYnxk69Gz6tT2SSuE2e-g&content-type=application/json`
+  $.ajax(url, {
+    dataType: 'json',
+    method: 'POST',
+    data: JSON.stringify({
+      'name': 'Play Domain',
+      'public': 'false'
+    }),
+    success: function(data) {
+      playlistId = (data.id);
+      console.log(userId, playlistId);
+    }
+  });
+}
+
+// Gets albums and tracks
 app.retreiveArtistTracks = function(artistAlbums) {
   $.when(...artistAlbums)
   .then((...albums) => {
@@ -164,29 +196,48 @@ app.retreiveArtistTracks = function(artistAlbums) {
       .map(album => album.id)
       .map(ids => app.getArtistTracks(ids));
     app.buldPlayList(albumIds);
-
+    // albums
+    console.log(albumIds, "album Id");
   });
 };
 
-app.buldPlayList = function(tracks) {
-  $.when(...tracks)
+
+app.buldPlayList = function(albumsIds) {
+  $.when(...albumIds)
     .then((...tracksResults) => {
+      // tracksResults are all artist songs
       tracksResults = tracksResults.map(getFirstElement)
         .map(item => item.items)
         .reduce(flatten,[])
-        .map(item => item.id);
+        .map(item => item.uri);
         
         const randomTracks = [];
         for(let i=0; i< 30; i++) {
           randomTracks.push(getRandomTrack(tracksResults));
         }
 
-        const baseUrl = `https://embed.spotify.com/?theme=white&uri=spotify:trackset:My Playlist:${randomTracks.join()}`;
-        
-        $('.playlist').html(`<iframe src="${baseUrl}" height="400"></iframe>`);
+        let songs = randomTracks.join();
+        app.addSongs(songs);
+        console.log(songs);
+
+        $('.playlist').html(`<iframe src="https://open.spotify.com/embed?uri=spotify:user:brittanyrenzlopez:playlist:1m9cnp12Bhg4xNWXNtIrJJ&theme=white&view=coverart" width="300" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>`);
 
     });
 };
+
+app.addSongs = function (songs) {
+  var url = `https://api.spotify.com/v1/users/${userId}/playlists/${playlistId}/tracks?uris=${songs}&access_token=BQAhpq_J1j5_EeoyYqzPMK1qJ7MaRlo28Uj6Q0CBIxraRNk9HscWWc_UV2kSxvmj8JNFiD-vt9ZrgIilIqcs81NwA2-8hMRwPLnHsjOzOEf8GL3RsMgAH4KAoLs5g7c0AAT1XmDXZVX3MJFWX4gor6njie2DxAF1pASiC2KE59olrZWN3mHGxvxKon4WU646JDUp5P29n7tQFqxxvZhGKGbPx1Q3S-55naYnxk69Gz6tT2SSuE2e-g&content-type=application/json`;
+  console.log(userId);
+  console.log(url);
+  $.ajax(url, {
+    dataType: 'json',
+    success: function(data) {
+      console.log(data);
+    }
+  })
+}
+
+
 
 // reusable function that returns first element
 const getFirstElement = (item) => item[0];
@@ -201,7 +252,7 @@ const getRandomTrack = (trackArray) => {
 
 
 // Allow user to enter artist names
-app.init = function() {
+app.events = function() {
   $('#search-btn').on('click', function(e) {
     e.preventDefault();
     let artists = $('input[type=text]').val();
@@ -213,9 +264,13 @@ app.init = function() {
     let look = artists.map(artist => app.getArists(artist));   
     // pass look
     app.retreiveArtistInfo(look);
+    app.getUsername();
       });
   };
 
+app.init = function() {
+  app.events();
+};
 
 $(app.init);
 
