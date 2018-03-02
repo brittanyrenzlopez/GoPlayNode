@@ -1,44 +1,28 @@
 //Spotify Client ID: 812eeebca2a145988f7f5099e1761808
 //Spotify Client Secret: 04cc698bfb7b4e7ab14ec5600cac73a2
 
-
-
-const songkickURL = "https://api.songkick.com/api/3.0/events.json?apikey=Lpl57W3wcb5NEdNk";
-var concertInfo = [];
-
-
 // Get Top Artists to display on front page
 function getTopArtistsfromLastFM(callback) {
   let URL = `http://ws.audioscrobbler.com/2.0/?method=chart.gettopartists&api_key=393f6ffbf12f2269f84b5b7240397dbc&format=json`;
-
   $.getJSON(URL, callback);
 }
-
 function displayTopArtistsfromLastFM(data) {
-  console.log(data, "display top artists");      //$.each(data.artists.artist, function(i, element){
+  console.log(data, "display top artists");
       for(var i = 0; i <= 10; i++) {
       let popName = data.artists.artist[i].name;
       $("#popularArtists").append("<li style='list-style-type: none; display:block; margin: 10px 0;'><a onclick='topArtistListen();' class='topID'>" + popName +"</a></li>");
     };
-
 };
 
-
-// close out display
+// close out content display
 function lose() {
   document.getElementById('container').style.display="none";
   document.getElementById('searching').style.display="";
   document.getElementById('search-btn').style.display="";
   document.getElementById('popularArtists').style.display="";
   document.getElementById('topTen').style.display="";
-  var music = document.querySelector('audio');
-
-
-  $('#concert-cont').empty();
   $('.search').val('');
-
 };
-
 
 // listen for when user enters input to search for artist
 function listen(){
@@ -51,58 +35,18 @@ $(`#search-btn`).click(event =>{
       return false;
    } else {
   document.getElementById('container').style.display="";
-  document.getElementById('goPlay').style.display="none";
-  document.getElementById('searching').style.display="none";
-  document.getElementById('search-btn').style.display="none";
+  document.getElementById('search-btn').style.display="";
   document.getElementById('footer').style.display="none";
   document.getElementById('popularArtists').style.display="none";
-
    }
-  $(`#artistName`).html(`${userText}`);
-  getDataFromSongkickApi(searchArtist, displaySongkickData);
-  getBiofromLastFM(searchArtist, displayBioFromLastFM);
-  getSimilarArtists(searchArtist, displaySimilarArtists);
 });
-}
-
-function topArtistListen(){
-const searchArtist = $('.topID').text();
-$('.topID').click(function(){
-   $(`artistName`).html($(this).val());
-  document.getElementById('container').style.display="";
-  document.getElementById('goPlay').style.display="none";
-  document.getElementById('searching').style.display="none";
-  document.getElementById('search-btn').style.display="none";
-  document.getElementById('footer').style.display="none";
-  document.getElementById('popularArtists').style.display="none";
-  getDataFromSongkickApi(searchArtist, displaySongkickData);
-  getBiofromLastFM(searchArtist, displayBioFromLastFM);
-});
-}
-
-
-window.onscroll = function() {scrollFunction()};
-
-function scrollFunction() {
-    if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-        document.getElementById("myBtn").style.display = "block";
-    } else {
-        document.getElementById("myBtn").style.display = "none";
-    }
-}
-
-// When user clicks on the button, scroll to the top of the document
-function topFunction() {
-    document.body.scrollTop = 0;
-    document.documentElement.scrollTop = 0;
 }
 
 // Spotify build playlist
-
 const app = {};
 let userId = "";
 let playlistId = "";
-
+let access = "BQA-g4f9HNcQPjd9qB2kFaUfubOr7UAppJToS2Z41K62Wc-8VUKLLIB1rc-tMUJqJKJ3aNdSUln1-Pq4NixLtx7AjemuuW717MaWqb67S1yowutsEyepOzsoETdvQBPEmzlRfI1vzAfK-K07Aaoh9BdSoaubv7cKWpWb8_0KPWmHZVdtlnvWNtIfSjvpLr0xZC8dgvwTF33sap9aikncnR_uKyMvrItIWQWopbbpbrpziPhNW4jB9g";
 
 app.getArists = (artist) => $.ajax({
   url: 'https://api.spotify.com/v1/search',
@@ -111,9 +55,11 @@ app.getArists = (artist) => $.ajax({
   data: {
     type: 'artist',
     q: artist,
-    access_token: "BQBFo6wPcSo0S3ZWBOWtr0YDyxcOjOhz3gt9Lv1GPYf6HXku67Fvic2zjmeGI8wd3RHzPFaleMrYRQFM_Zm4LpS5UByKzmk7mWxdRxK4gV-dQaTs53EwQEVePbFaB0R9Zr2NQodjDI3ozR-cHFWLiLMjqfz34o5xHeHXFr_-q0dQBDp79F0TDQwu-CZKnxRLRzDcDb2LX5K4QnkZDqQ0QvmMpeNJ3hpHb1h-yfWCt_g2xappxo-jJg"
+    access_token: access
   }
 });
+
+console.log(access);
 
 // Get Albums
 app.getArtistAlbums = (artistId) => $.ajax({
@@ -122,7 +68,7 @@ app.getArtistAlbums = (artistId) => $.ajax({
   dataType: 'json',
   data: {
     album_type: 'album',
-    access_token: "BQBFo6wPcSo0S3ZWBOWtr0YDyxcOjOhz3gt9Lv1GPYf6HXku67Fvic2zjmeGI8wd3RHzPFaleMrYRQFM_Zm4LpS5UByKzmk7mWxdRxK4gV-dQaTs53EwQEVePbFaB0R9Zr2NQodjDI3ozR-cHFWLiLMjqfz34o5xHeHXFr_-q0dQBDp79F0TDQwu-CZKnxRLRzDcDb2LX5K4QnkZDqQ0QvmMpeNJ3hpHb1h-yfWCt_g2xappxo-jJg"
+    access_token: access
   }
 });
 
@@ -132,10 +78,9 @@ app.getArtistTracks = (id) => $.ajax({
   method: 'GET',
   dataType: 'json',
   data: {
-    access_token: "BQBFo6wPcSo0S3ZWBOWtr0YDyxcOjOhz3gt9Lv1GPYf6HXku67Fvic2zjmeGI8wd3RHzPFaleMrYRQFM_Zm4LpS5UByKzmk7mWxdRxK4gV-dQaTs53EwQEVePbFaB0R9Zr2NQodjDI3ozR-cHFWLiLMjqfz34o5xHeHXFr_-q0dQBDp79F0TDQwu-CZKnxRLRzDcDb2LX5K4QnkZDqQ0QvmMpeNJ3hpHb1h-yfWCt_g2xappxo-jJg"
+    access_token: access
   }
 });
-
 
 // Gets albums from artists
 app.retreiveArtistInfo = function(look) {
@@ -151,10 +96,10 @@ app.retreiveArtistInfo = function(look) {
         //results are JSON of albums from artists, pass to rtracks
       });
 };
-
+// get Spotify user
 app.getUsername = function(id) {
   var url = 'https://api.spotify.com/v1/me';
-  let accesstoken = 'BQBFo6wPcSo0S3ZWBOWtr0YDyxcOjOhz3gt9Lv1GPYf6HXku67Fvic2zjmeGI8wd3RHzPFaleMrYRQFM_Zm4LpS5UByKzmk7mWxdRxK4gV-dQaTs53EwQEVePbFaB0R9Zr2NQodjDI3ozR-cHFWLiLMjqfz34o5xHeHXFr_-q0dQBDp79F0TDQwu-CZKnxRLRzDcDb2LX5K4QnkZDqQ0QvmMpeNJ3hpHb1h-yfWCt_g2xappxo-jJg';
+  let accesstoken = access
   $.ajax(url, {
     dataType: 'json',
     headers: {
@@ -168,9 +113,10 @@ app.getUsername = function(id) {
   });
 }
 
-
+// Create empty playlist
 app.createPlaylist = function(userId) {
-  var url = `https://api.spotify.com/v1/users/${userId}/playlists?access_token=BQBFo6wPcSo0S3ZWBOWtr0YDyxcOjOhz3gt9Lv1GPYf6HXku67Fvic2zjmeGI8wd3RHzPFaleMrYRQFM_Zm4LpS5UByKzmk7mWxdRxK4gV-dQaTs53EwQEVePbFaB0R9Zr2NQodjDI3ozR-cHFWLiLMjqfz34o5xHeHXFr_-q0dQBDp79F0TDQwu-CZKnxRLRzDcDb2LX5K4QnkZDqQ0QvmMpeNJ3hpHb1h-yfWCt_g2xappxo-jJg&content-type=application/json`
+  var url = `https://api.spotify.com/v1/users/${userId}/playlists?access_token=${access}&content-type=application/json`
+  console.log(userId, url);
   $.ajax(url, {
     dataType: 'json',
     method: 'POST',
@@ -179,10 +125,9 @@ app.createPlaylist = function(userId) {
       'public': 'false'
     }),
     success: function(data) {
-    setTimeOut(function (){
+      console.log(data);
       playlistId = (data.id);
-    }, 1000)
-      console.log(userId, playlistId);
+      console.log(playlistId);
     }
   });
 }
@@ -202,8 +147,7 @@ app.retreiveArtistTracks = function(artistAlbums) {
     console.log(albumIds, "album Id");
   });
 };
-
-
+//get tracks for playlist
 app.buldPlayList = function(albumsIds) {
   $.when(...albumIds)
     .then((...tracksResults) => {
@@ -228,9 +172,9 @@ app.buldPlayList = function(albumsIds) {
 
     });
 };
-
+// add tracks to playlist
 app.addSongs = function (songs, playlistId) {
-  var url = `https://api.spotify.com/v1/users/${userId}/playlists/${playlistId}/tracks?uris=${songs}&access_token=BQBFo6wPcSo0S3ZWBOWtr0YDyxcOjOhz3gt9Lv1GPYf6HXku67Fvic2zjmeGI8wd3RHzPFaleMrYRQFM_Zm4LpS5UByKzmk7mWxdRxK4gV-dQaTs53EwQEVePbFaB0R9Zr2NQodjDI3ozR-cHFWLiLMjqfz34o5xHeHXFr_-q0dQBDp79F0TDQwu-CZKnxRLRzDcDb2LX5K4QnkZDqQ0QvmMpeNJ3hpHb1h-yfWCt_g2xappxo-jJg&content-type=application/json`;
+  var url = `https://api.spotify.com/v1/users/${userId}/playlists/${playlistId}/tracks?uris=${songs}&access_token=${access}&content-type=application/json`;
   console.log(userId);
   console.log(url);
   $.ajax(url, {
@@ -241,8 +185,6 @@ app.addSongs = function (songs, playlistId) {
     }
   })
 }
-
-
 
 // reusable function that returns first element
 const getFirstElement = (item) => item[0];
@@ -279,56 +221,49 @@ app.init = function() {
 
 $(app.init);
 
-
 // Log in to Spotify
 
 function SpotifyLogin() {
     
-    function login(callback) {
-        var CLIENT_ID = '812eeebca2a145988f7f5099e1761808';
-        var REDIRECT_URI = 'http://localhost:7000/';
-        function getLoginURL(scopes) {
-            return 'https://accounts.spotify.com/authorize?client_id=' + CLIENT_ID +
-              '&redirect_uri=' + encodeURIComponent(REDIRECT_URI) +
-              '&scope=' + encodeURIComponent(scopes.join(' ')) +
-              '&response_type=token';
-        }
-        
-        var url = getLoginURL([
-            'user-read-email'
-        ]);
-
+  function login(callback) {
+  var CLIENT_ID = '812eeebca2a145988f7f5099e1761808';
+  var REDIRECT_URI = 'http://localhost:7000/';
+  function getLoginURL(scopes) {
+  return 'https://accounts.spotify.com/authorize?client_id=' + CLIENT_ID +
+      '&redirect_uri=' + encodeURIComponent(REDIRECT_URI) +
+      '&scope=' + encodeURIComponent(scopes.join(' ')) +
+      '&response_type=token';
+} 
+  var url = getLoginURL([
+      'user-read-email'
+]);
         console.log(url);
         
-        var width = 450,
-            height = 730,
-            left = (screen.width / 2) - (width / 2),
-            top = (screen.height / 2) - (height / 2);
-    
-        window.addEventListener("message", function(event) {
-            var hash = JSON.parse(event.data);
+  var width = 450,
+      height = 730,
+      left = (screen.width / 2) - (width / 2),
+      top = (screen.height / 2) - (height / 2);   
+      window.addEventListener("message", function(event) {
+  var hash = JSON.parse(event.data);
             if (hash.type == 'access_token') {
                 callback(hash.access_token);
-            }
-        }, false);
+  }
+}, false);
         
-        var w = window.location.assign(url,
-                            'Spotify',
-                            'menubar=no,location=no,resizable=no,scrollbars=no,status=no, width=' + width + ', height=' + height + ', top=' + top + ', left=' + left
-                           );
-        console.log(url);
-        
-    }
-
-    function getUserData(accessToken) {
+  var w = window.location.assign(url,
+          'Spotify',
+          'menubar=no,location=no,resizable=no,scrollbars=no,status=no, width=' + width + ', height=' + height + ', top=' + top + ', left=' + left
+);
+  console.log(url);      
+}
+  function getUserData(accessToken) {
         return $.ajax({
             url: 'https://api.spotify.com/v1/me',
             headers: {
                'Authorization': 'Bearer ' + accessToken
-            }
-        });
     }
-   
+  });
+} 
     var resultsPlaceholder = document.getElementById('result'),
         loginButton = document.getElementById('btn-login');
     
@@ -341,11 +276,7 @@ function SpotifyLogin() {
                 });
             });
     });
-    
 };
 
 $(getTopArtistsfromLastFM(displayTopArtistsfromLastFM));
-
 $(listen);
-
-$(topArtistListen());

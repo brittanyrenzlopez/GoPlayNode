@@ -1,17 +1,13 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 	<title>Play Domain</title>
 	<link rel="stylesheet" href="/css/bootstrap.css" />
 	<link rel="stylesheet" href="/css/style.css" />
-   <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/main.css" rel="stylesheet">
 
-
-
-    <!-- Custom styles for this template -->
-    <link href="css/new-age.min.css" rel="stylesheet">
-
-    <link rel="icon" type="image/png" href="http://www.freepngimg.com/download/headphones/30758-2-headphones-with-music-clip-art.png">
+  <link rel="icon" type="image/png" href="http://www.freepngimg.com/download/headphones/30758-2-headphones-with-music-clip-art.png">
 </head>
 <body>
 	<div class="container">
@@ -20,7 +16,6 @@
           <ul class="nav nav-pills pull-right">
             {{#if user}}
               <li role="presentation"><a href="/">Home</a></li>
-              <li role="presentation"><a href="/users/show">Profile</a></li>
               <li role="presentation"><a href="/users/logout">Logout</a></li>
             {{else}}
             <li role="presentation"><a href="/">Home</a></li>
@@ -37,7 +32,7 @@
   		{{#if success_msg}}
             <div class="alert alert-success">{{success_msg}}</div>
           {{/if}}
-
+          
           {{#if error_msg}}
             <div class="alert alert-danger">{{error_msg}}</div>
           {{/if}}

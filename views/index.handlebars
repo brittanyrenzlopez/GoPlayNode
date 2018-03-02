@@ -3,83 +3,55 @@
 <head>
   <meta charset="UTF-8">
   <title>Play Domain</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-
-
-    <!-- Custom styles for this template -->
-    <link href="css/new-age.min.css" rel="stylesheet">
-    <link rel="icon" type="image/png" href="http://www.freepngimg.com/download/headphones/30758-2-headphones-with-music-clip-art.png">
-
+  <link href="css/main.css" rel="stylesheet">
+<!---Favicon-->
+<link rel="icon" type="image/png" href="http://www.freepngimg.com/download/headphones/30758-2-headphones-with-music-clip-art.png">
 </head>
 
-<body id="page-top">
+<body>
 <main role="main">
-
     <header class="masthead">
-      <div class="container h-100">
         <div class="row h-100">
           <div class="col-lg-7 my-auto">
             <div class="header-content mx-auto">
               <h1 id="Play">Play Domain</h1>
-              <h1 class="mb-5" id="discover">Generate playlists based on your favorite artists!</h1>
-              <a href="#download" class="btn btn-outline btn-xl js-scroll-trigger">Get Started Now!</a>
-            </div>
-
+              <p class="mb-5" id="discover">Generate Spotify playlists combining all of your favorite artists!<br><br>To get started, register or log in with demo account: <br>User: player1<br>Password: password</p>
           </div>
-          <div class="col-lg-5 my-auto">
-            <div class="device-container">
-              <div class="device-mockup iphone6_plus portrait white">
-                
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+       </div>
       </div>
-    </header>
+  </div>
+</header>
 
-
+{{#if user}}            
+<section class="download bg-primary text-center" id="download" role="content">
+  <h2 id="first">First, log in to Spotify</h2>
 <button class="btn btn-outline btn-xl" id="btn-login" onclick="SpotifyLogin();">Login to Spotify</button>
-
-
-<button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
-
-                 
-<section class="download bg-primary text-center" id="download">
-      <h2 id="find">Find Your Artists</h2>
-     <form class="search-form" role = "search">
-    <input type="text" label for="searching" class="search" id="searching" placeholder="enter artist names">
+    <h2 id="find">Find Your Artists</h2>
+<form class="search-form" role="search">
+    <input type="text" class="search" placeholder="ex: Radiohead, Eminem, Lorde">
     <button type="button" class="btn btn-outline btn-xl" id="search-btn">Search</button>
-  </form>
-
-
+</form>
 
 <!-- Content Display -->
-    <div id="container" style="display:none;" role="contentinfo">
-      <button type="button" class="closing" onclick="lose();">&times;</button>
-      <button id="add">Save Playlist</button>
-
-      <div class="playlist">
-        <div class="loader">
-          <div class="inner-circle"></div>
+<div id="container" style="display:none;" role="contentinfo">
+      <button type="button" class="closing" onclick="lose();"></button>
+          <div class="playlist">
+              <div class="loader">
+           <div class="inner-circle"></div>
         </div>
-      </div>
-
     </div>
+ </div>
 
-
-
-
-  <div id = "popularArtists">
-    <h2 id="topTen">Top Ten Artists</h2>
+  <div id="popularArtists">
+    <h2 id="topTen">Artists Trending Now</h2>
     <!-- holds popular artists -->
   </div>
 
 </section>
 
-
+{{/if}}
 </main>
   <script src="public/js/main.js"></script>
   </body>
