@@ -46,7 +46,7 @@ $(`#search-btn`).click(event =>{
 const app = {};
 let userId = "";
 let playlistId = "";
-let access = "BQA-g4f9HNcQPjd9qB2kFaUfubOr7UAppJToS2Z41K62Wc-8VUKLLIB1rc-tMUJqJKJ3aNdSUln1-Pq4NixLtx7AjemuuW717MaWqb67S1yowutsEyepOzsoETdvQBPEmzlRfI1vzAfK-K07Aaoh9BdSoaubv7cKWpWb8_0KPWmHZVdtlnvWNtIfSjvpLr0xZC8dgvwTF33sap9aikncnR_uKyMvrItIWQWopbbpbrpziPhNW4jB9g";
+let access = "BQDmR3G-v4Ce3C_z-RMYhVQcUy24SCaPQj63E0SNsiAISMiVS3Spi8jTBx4RNazMNOVVqQGqUWI-dY6tRzqHqrekZ4w1d0AN-gGlTQl1QpAY96LF4r5hmQ_ArIy7W_VLhQzDLFiLdqpUSEUIOHCgsmrgq-AMFUGistC4gVoeAJ5M5HAJu4FJbOxMCml2Tujn784CEJSeQYPckSs4tpfTWDRQ0Ss62vKnUycMCg";
 
 app.getArists = (artist) => $.ajax({
   url: 'https://api.spotify.com/v1/search',
@@ -168,8 +168,6 @@ app.buldPlayList = function(albumsIds) {
         app.addSongs(songs, playlistId);
         console.log(songs);
 
-        $('.playlist').html(`<iframe src="https://open.spotify.com/embed?uri=spotify:user:brittanyrenzlopez:playlist:1m9cnp12Bhg4xNWXNtIrJJ&theme=white&view=coverart" width="300" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>`);
-
     });
 };
 // add tracks to playlist
@@ -182,6 +180,7 @@ app.addSongs = function (songs, playlistId) {
     method: 'POST',
     success: function(data) {
       console.log(data);
+      $('.playlist').html(`<iframe src="https://open.spotify.com/embed?uri=spotify:user:${userId}:playlist:${playlistId}&theme=white&view=coverart" width="300" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>`);
     }
   })
 }
@@ -221,6 +220,14 @@ app.init = function() {
 
 $(app.init);
 
+// get access token
+function getAccess(){
+  $.ajax({
+
+  })
+}
+
+
 // Log in to Spotify
 
 function SpotifyLogin() {
@@ -235,7 +242,7 @@ function SpotifyLogin() {
       '&response_type=token';
 } 
   var url = getLoginURL([
-      'user-read-email'
+      'user-read-email user-read-private user-read-birthdate playlist-modify-public playlist-modify-private'
 ]);
         console.log(url);
         
