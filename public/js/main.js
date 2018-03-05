@@ -46,7 +46,8 @@ $(`#search-btn`).click(event =>{
 const app = {};
 let userId = "";
 let playlistId = "";
-let access = "BQCdXkTvuPJrwFwsxAIw253gLw22iWQjexxsDfJAzTISM2CdQVu-wkvl8GaSsddT15eYCB89Tp5E1lN0niiLiOC2hwBKSIywoR5Nbd06JTFTGaabQQdCNnQSJ5LR9DoJrdSvbIZNLAcjdfFMh9AG63IzoyKZGb7gumc0XHzan_mmB0eHSgcLjNieVR7_OopEvP44IW6Oy4T9emb7tlOb6wQ1452bmkr6Y-54ig";
+let token = "";
+let access = "BQC62tCxNW0mBqNY-VgSOPGHnJBmFWnB_M16aKLr6LICenq7PufNVFo9PSPqLMPxa16PZKeY2aUEf-lf_XAFAPYkoRIHRqik1sEfIY5OaLoQO0yPt_kIRdv1d0uPVgxrH9lAiwxGaEnYIPL1idwbJx-9PbFxko1r8N0PA9hQeMtlnYnSrzlXFD6EvUzSs5SnRnlKUXROu8YUAMsKxU6i5jPkFXN4FuC11lM3dQ";
 
 app.getArists = (artist) => $.ajax({
   url: 'https://api.spotify.com/v1/search',
@@ -59,7 +60,6 @@ app.getArists = (artist) => $.ajax({
   }
 });
 
-console.log(access);
 
 // Get Albums
 app.getArtistAlbums = (artistId) => $.ajax({
@@ -68,7 +68,7 @@ app.getArtistAlbums = (artistId) => $.ajax({
   dataType: 'json',
   data: {
     album_type: 'album',
-    access_token: access
+    access_token: hash.access_token
   }
 });
 
@@ -243,7 +243,7 @@ function SpotifyLogin() {
       left = (screen.width / 2) - (width / 2),
       top = (screen.height / 2) - (height / 2);   
       window.addEventListener("message", function(event) {
-  var hash = JSON.parse(event.data);
+   hash = JSON.parse(event.data);
             if (hash.type == 'access_token') {
                 callback(hash.access_token);
   }
@@ -276,6 +276,7 @@ function SpotifyLogin() {
             });
     });
 };
+
 
 $(getTopArtistsfromLastFM(displayTopArtistsfromLastFM));
 $(listen);
