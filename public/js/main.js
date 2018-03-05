@@ -46,7 +46,7 @@ $(`#search-btn`).click(event =>{
 const app = {};
 let userId = "";
 let playlistId = "";
-let access = "BQDmR3G-v4Ce3C_z-RMYhVQcUy24SCaPQj63E0SNsiAISMiVS3Spi8jTBx4RNazMNOVVqQGqUWI-dY6tRzqHqrekZ4w1d0AN-gGlTQl1QpAY96LF4r5hmQ_ArIy7W_VLhQzDLFiLdqpUSEUIOHCgsmrgq-AMFUGistC4gVoeAJ5M5HAJu4FJbOxMCml2Tujn784CEJSeQYPckSs4tpfTWDRQ0Ss62vKnUycMCg";
+let access = "BQCdXkTvuPJrwFwsxAIw253gLw22iWQjexxsDfJAzTISM2CdQVu-wkvl8GaSsddT15eYCB89Tp5E1lN0niiLiOC2hwBKSIywoR5Nbd06JTFTGaabQQdCNnQSJ5LR9DoJrdSvbIZNLAcjdfFMh9AG63IzoyKZGb7gumc0XHzan_mmB0eHSgcLjNieVR7_OopEvP44IW6Oy4T9emb7tlOb6wQ1452bmkr6Y-54ig";
 
 app.getArists = (artist) => $.ajax({
   url: 'https://api.spotify.com/v1/search',
@@ -219,14 +219,6 @@ app.init = function() {
 };
 
 $(app.init);
-
-// get access token
-function getAccess(){
-  $.ajax({
-
-  })
-}
-
 
 // Log in to Spotify
 
