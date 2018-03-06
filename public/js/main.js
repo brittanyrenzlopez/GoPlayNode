@@ -39,6 +39,7 @@ $(`#search-btn`).click(event =>{
   document.getElementById('footer').style.display="none";
   document.getElementById('popularArtists').style.display="none";
    }
+   $(searchArtist).val('');
 });
 }
 
@@ -47,7 +48,8 @@ const app = {};
 let userId = "";
 let playlistId = "";
 let token = "";
-let access = "BQC62tCxNW0mBqNY-VgSOPGHnJBmFWnB_M16aKLr6LICenq7PufNVFo9PSPqLMPxa16PZKeY2aUEf-lf_XAFAPYkoRIHRqik1sEfIY5OaLoQO0yPt_kIRdv1d0uPVgxrH9lAiwxGaEnYIPL1idwbJx-9PbFxko1r8N0PA9hQeMtlnYnSrzlXFD6EvUzSs5SnRnlKUXROu8YUAMsKxU6i5jPkFXN4FuC11lM3dQ";
+console.log(token);
+let access = "BQAzC3UAAwl1U7-9g6gOpi4s34oVSOxy_NulniYTJRec-Q-NYW_QSAp0bOqXNEJIwOzgh8saTU46W_RRKyYnnfnTKPydXoFJoav2BMxPCs8xHQr5_Vmurfaet2Atj1FpsqsQ0gUxP6a1CkXt6Q1GP8WZOlO2oDrfvOSuP1BChC49a2AcJFi6cKCcnrnIbXRvke0B_6MgpEz9UVE0Nasc31W_UFvjjR_wOJCDBQ";
 
 app.getArists = (artist) => $.ajax({
   url: 'https://api.spotify.com/v1/search',
@@ -68,7 +70,7 @@ app.getArtistAlbums = (artistId) => $.ajax({
   dataType: 'json',
   data: {
     album_type: 'album',
-    access_token: hash.access_token
+    access_token: access
   }
 });
 
@@ -97,13 +99,13 @@ app.retreiveArtistInfo = function(look) {
       });
 };
 // get Spotify user
-app.getUsername = function(id) {
+app.getUsername = function(accessToken) {
+  console.log(accessToken);
   var url = 'https://api.spotify.com/v1/me';
-  let accesstoken = access
   $.ajax(url, {
     dataType: 'json',
     headers: {
-      'Authorization': 'Bearer ' + accesstoken
+      'Authorization': 'Bearer ' + access
     },
     success: function(data) {
       userId = (data.id);
@@ -220,6 +222,29 @@ app.init = function() {
 
 $(app.init);
 
+// get access token
+function getToken(callback){
+  var CLIENT_ID = '812eeebca2a145988f7f5099e1761808';
+  var REDIRECT_URI = 'http://localhost:7000/';
+  $.ajax({
+    method: 'GET',
+    dataType: 'json',
+    headers: {
+      'Authorization': 'Bearer ' + access
+    },
+    url: 'https://accounts.spotify.com/authorize',
+    data: {
+      "client_id": CLIENT_ID,
+      "response_type": "code",
+      "redirect_uri": REDIRECT_URI,
+      "scopes": "user-read-email user-read-private user-read-birthdate playlist-modify-public playlist-modify-private"
+    },
+    success: function(){
+      console.log(url);
+    }
+});
+}
+
 // Log in to Spotify
 
 function SpotifyLogin() {
@@ -243,9 +268,10 @@ function SpotifyLogin() {
       left = (screen.width / 2) - (width / 2),
       top = (screen.height / 2) - (height / 2);   
       window.addEventListener("message", function(event) {
-   hash = JSON.parse(event.data);
+   var hash = JSON.parse(event.data);
             if (hash.type == 'access_token') {
                 callback(hash.access_token);
+  token = (hash.access_token);
   }
 }, false);
         
@@ -263,15 +289,14 @@ function SpotifyLogin() {
     }
   });
 } 
-    var resultsPlaceholder = document.getElementById('result'),
-        loginButton = document.getElementById('btn-login');
+    var loginButton = document.getElementById('btn-login');
     
     loginButton.addEventListener('click', function() {
         login(function(accessToken) {
             getUserData(accessToken)
+            getUsername(accessToken)
                 .then(function(response) {
                     loginButton.style.display = 'none';
-                    resultsPlaceholder.innerHTML = template(response);
                 });
             });
     });
