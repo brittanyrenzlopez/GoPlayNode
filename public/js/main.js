@@ -49,7 +49,7 @@ let userId = "";
 let playlistId = "";
 let token = "";
 console.log(token);
-let access = "BQAzC3UAAwl1U7-9g6gOpi4s34oVSOxy_NulniYTJRec-Q-NYW_QSAp0bOqXNEJIwOzgh8saTU46W_RRKyYnnfnTKPydXoFJoav2BMxPCs8xHQr5_Vmurfaet2Atj1FpsqsQ0gUxP6a1CkXt6Q1GP8WZOlO2oDrfvOSuP1BChC49a2AcJFi6cKCcnrnIbXRvke0B_6MgpEz9UVE0Nasc31W_UFvjjR_wOJCDBQ";
+let access = "BQAk1X_zJzk74sv5_htrHRKhZ0x6PNx_pNUKbE3QRLl_eq6fHb6k3R2UztjUHzA4q6sUwUX3LJwJogWlyCgqV9gGSjha64negOB7wjUkqGWEXxCRxXejX3dDRbrhZGqLbq-Scv2lz0Nbe2_B99uT54koAQLteBfFIhNCK-VcVlrTSZ4Kkzd1LzKA7DVbU_XlBBFtXgtw2zmnUYXsLoAyZaFD8d6chy_r5rRjtQ";
 
 app.getArists = (artist) => $.ajax({
   url: 'https://api.spotify.com/v1/search',
