@@ -1,19 +1,6 @@
 //Spotify Client ID: 812eeebca2a145988f7f5099e1761808
 //Spotify Client Secret: 04cc698bfb7b4e7ab14ec5600cac73a2
 
-// Get Top Artists to display on front page
-function getTopArtistsfromLastFM(callback) {
-  let URL = `http://ws.audioscrobbler.com/2.0/?method=chart.gettopartists&api_key=393f6ffbf12f2269f84b5b7240397dbc&format=json`;
-  $.getJSON(URL, callback);
-}
-function displayTopArtistsfromLastFM(data) {
-  console.log(data, "display top artists");
-      for(var i = 0; i <= 10; i++) {
-      let popName = data.artists.artist[i].name;
-      $("#popularArtists").append("<li style='list-style-type: none; display:block; margin: 10px 0;'><a onclick='topArtistListen();' class='topID'>" + popName +"</a></li>");
-    };
-};
-
 // close out content display
 function lose() {
   document.getElementById('container').style.display="none";
@@ -49,9 +36,8 @@ let userId = "";
 let playlistId = "";
 var url = window.location.href,
     token = url.match(/\#(?:access_token)\=([\S\s]*?)\&/)[1];
-
 console.log(token);
-let access = "BQDWfjC8NrAYjL10XW_wU2YYWE9CkiYhsx1cGRZzvm-O_Ea2ZoXz6-OT5rBcJmeFCtuQ3ntKBpaY3Dfrz4zdoUz9szYMsQCZGL1Vjpnsgb4Oxq2hxO5SBk96ECuoGScW5QzVcBPRyX_g5ZHU3CgI5UVN7-xFW-mBOBNDsIVHsrXYnOXDn93DhReVaxLU-DL4pxK43Tua7nW0CllmnAe2uKxLkRJVFjbUeY4y4g";
+let access = "BQBWWzinKWSoBcbd6dyLj7IGRHDA6lDTjr7HW3PWsaal6khHw14dKZWRgXJzPOuq-IaFQCnt-CETfqzjRpdQkneFPNvvyFN7ItFcsxQ5ivVAQaqHxsCWNLV0RW1Ziy70sxnfHLPsSbDOpmmPw-f3abzk-MKb0l8Qnyw2e9Oxq3Io_Ivqkg4JeFG3NmLAL7MAS5BaovdxXM7qt4VPx4e-Tfd00-ufB93UKObJxqc7qvgr01l5SpNOlUb3X1dfJEfN";
 
 app.getArists = (artist) => $.ajax({
   url: 'https://api.spotify.com/v1/search',
@@ -82,7 +68,7 @@ app.getArtistTracks = (id) => $.ajax({
   method: 'GET',
   dataType: 'json',
   data: {
-    access_token: access
+    access_token: token
   }
 });
 
@@ -102,7 +88,6 @@ app.retreiveArtistInfo = function(look) {
 };
 // get Spotify user
 app.getUsername = function(accessToken) {
-  console.log(accessToken);
   var url = 'https://api.spotify.com/v1/me';
   $.ajax(url, {
     dataType: 'json',
@@ -268,20 +253,17 @@ function SpotifyLogin() {
     }
   });
 } 
-    var loginButton = document.getElementById('btn-login');   
+    var loginButton = document.getElementById('btn-login');
+    
     loginButton.addEventListener('click', function() {
         login(function(accessToken) {
             getUserData(accessToken)
             getUsername(accessToken)
                 .then(function(response) {
                     loginButton.style.display = 'none';
-                    var url = window.location.href,
-    token = url.match(/\#(?:access_token)\=([\S\s]*?)\&/)[1];
                 });
             });
     });
 };
 
-
-$(getTopArtistsfromLastFM(displayTopArtistsfromLastFM));
 $(listen);

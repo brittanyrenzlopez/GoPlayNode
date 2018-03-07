@@ -68,30 +68,6 @@ html, body {
   text-shadow: 0 0 5px black, 0 0 10px #fff, 0 0 20px #ffe100, 0 0 30px #ffe100, 0 0 40px #ffe100, 0 0 55px #ffe100, 0 0 75px #ffe100;
 }
 
-#popularArtists {
-  display: inline-block;
-  position: static;
-  color: whitesmoke;
-  line-height: 150%;
-  font-family: Century Gothic;
-  margin: 0 auto;
-  margin-top: -350px;
-  border: 2px solid #404040;
-  background-color: #0c0c0c;
-  width: 55%;
-  min-height: 70px;
-  padding-bottom: 10px;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-#popularArtists a:hover {
-  cursor: pointer;
-  color: gold;
-  transform: scale(1.2);
-}
-
-
 /* Close Button */
 .closing {
   display:block;
@@ -235,7 +211,7 @@ input.search {
       text-align: center;
       outline:0;
       border: 1px solid #202020;
-      background:rgba(255,255,255, 0.3);
+      background:rgba(255,255,255, 0.6);
       transition: background-color ease 400ms;
       color: black;
       width: 120%;
