@@ -12,6 +12,7 @@ var mongo = require('mongodb');
 var mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/GoPlay');
 var db = mongoose.connection;
+var querystring = require('querystring');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
@@ -85,4 +86,3 @@ app.set('port', (process.env.PORT || 7000));
 app.listen(app.get('port'), function(){
 	console.log('Server started on port '+app.get('port'));
 });
-

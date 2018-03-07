@@ -47,9 +47,11 @@ $(`#search-btn`).click(event =>{
 const app = {};
 let userId = "";
 let playlistId = "";
-let token = "";
+var url = window.location.href,
+    token = url.match(/\#(?:access_token)\=([\S\s]*?)\&/)[1];
+
 console.log(token);
-let access = "BQAk1X_zJzk74sv5_htrHRKhZ0x6PNx_pNUKbE3QRLl_eq6fHb6k3R2UztjUHzA4q6sUwUX3LJwJogWlyCgqV9gGSjha64negOB7wjUkqGWEXxCRxXejX3dDRbrhZGqLbq-Scv2lz0Nbe2_B99uT54koAQLteBfFIhNCK-VcVlrTSZ4Kkzd1LzKA7DVbU_XlBBFtXgtw2zmnUYXsLoAyZaFD8d6chy_r5rRjtQ";
+let access = "BQDWfjC8NrAYjL10XW_wU2YYWE9CkiYhsx1cGRZzvm-O_Ea2ZoXz6-OT5rBcJmeFCtuQ3ntKBpaY3Dfrz4zdoUz9szYMsQCZGL1Vjpnsgb4Oxq2hxO5SBk96ECuoGScW5QzVcBPRyX_g5ZHU3CgI5UVN7-xFW-mBOBNDsIVHsrXYnOXDn93DhReVaxLU-DL4pxK43Tua7nW0CllmnAe2uKxLkRJVFjbUeY4y4g";
 
 app.getArists = (artist) => $.ajax({
   url: 'https://api.spotify.com/v1/search',
@@ -58,7 +60,7 @@ app.getArists = (artist) => $.ajax({
   data: {
     type: 'artist',
     q: artist,
-    access_token: access
+    access_token: token
   }
 });
 
@@ -70,7 +72,7 @@ app.getArtistAlbums = (artistId) => $.ajax({
   dataType: 'json',
   data: {
     album_type: 'album',
-    access_token: access
+    access_token: token
   }
 });
 
@@ -105,7 +107,7 @@ app.getUsername = function(accessToken) {
   $.ajax(url, {
     dataType: 'json',
     headers: {
-      'Authorization': 'Bearer ' + access
+      'Authorization': 'Bearer ' + token
     },
     success: function(data) {
       userId = (data.id);
@@ -117,7 +119,7 @@ app.getUsername = function(accessToken) {
 
 // Create empty playlist
 app.createPlaylist = function(userId) {
-  var url = `https://api.spotify.com/v1/users/${userId}/playlists?access_token=${access}&content-type=application/json`
+  var url = `https://api.spotify.com/v1/users/${userId}/playlists?access_token=${token}&content-type=application/json`
   console.log(userId, url);
   $.ajax(url, {
     dataType: 'json',
@@ -174,7 +176,7 @@ app.buldPlayList = function(albumsIds) {
 };
 // add tracks to playlist
 app.addSongs = function (songs, playlistId) {
-  var url = `https://api.spotify.com/v1/users/${userId}/playlists/${playlistId}/tracks?uris=${songs}&access_token=${access}&content-type=application/json`;
+  var url = `https://api.spotify.com/v1/users/${userId}/playlists/${playlistId}/tracks?uris=${songs}&access_token=${token}&content-type=application/json`;
   console.log(userId);
   console.log(url);
   $.ajax(url, {
@@ -222,29 +224,6 @@ app.init = function() {
 
 $(app.init);
 
-// get access token
-function getToken(callback){
-  var CLIENT_ID = '812eeebca2a145988f7f5099e1761808';
-  var REDIRECT_URI = 'http://localhost:7000/';
-  $.ajax({
-    method: 'GET',
-    dataType: 'json',
-    headers: {
-      'Authorization': 'Bearer ' + access
-    },
-    url: 'https://accounts.spotify.com/authorize',
-    data: {
-      "client_id": CLIENT_ID,
-      "response_type": "code",
-      "redirect_uri": REDIRECT_URI,
-      "scopes": "user-read-email user-read-private user-read-birthdate playlist-modify-public playlist-modify-private"
-    },
-    success: function(){
-      console.log(url);
-    }
-});
-}
-
 // Log in to Spotify
 
 function SpotifyLogin() {
@@ -289,14 +268,15 @@ function SpotifyLogin() {
     }
   });
 } 
-    var loginButton = document.getElementById('btn-login');
-    
+    var loginButton = document.getElementById('btn-login');   
     loginButton.addEventListener('click', function() {
         login(function(accessToken) {
             getUserData(accessToken)
             getUsername(accessToken)
                 .then(function(response) {
                     loginButton.style.display = 'none';
+                    var url = window.location.href,
+    token = url.match(/\#(?:access_token)\=([\S\s]*?)\&/)[1];
                 });
             });
     });
