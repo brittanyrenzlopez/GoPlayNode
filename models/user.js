@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 var bcrypt = require('bcryptjs');
 
-mongoose.connect('mongodb://localhost/7000');
+mongoose.connect('mongodb://newplayer:music@ds259768.mlab.com:59768/play-domain-db');
 
 var db = mongoose.connection;
 

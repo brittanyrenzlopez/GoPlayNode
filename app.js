@@ -10,7 +10,7 @@ var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var mongo = require('mongodb');
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/7000');
+mongoose.connect('mongodb://newplayer:music@ds259768.mlab.com:59768/play-domain-db');
 var db = mongoose.connection;
 var querystring = require('querystring');
 
