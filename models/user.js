@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 var bcrypt = require('bcryptjs');
 
-mongoose.connect('mongodb://localhost/GoPlay');
+mongoose.connect('mongodb://localhost/7000');
 
 var db = mongoose.connection;
 
@@ -33,7 +33,6 @@ module.exports.createUser = function(newUser, callback){
 	    });
 	});
 }
-
 
 module.exports.getUserByUsername = function(username, callback){
 	var query = {username: username};

@@ -10,7 +10,7 @@ var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var mongo = require('mongodb');
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/GoPlay');
+mongoose.connect('mongodb://localhost/7000');
 var db = mongoose.connection;
 var querystring = require('querystring');
 
@@ -39,7 +39,6 @@ app.use(session({
     saveUninitialized: true,
     resave: true
 }));
-
 
 // Passport init
 app.use(passport.initialize());
@@ -75,10 +74,8 @@ app.use(function (req, res, next) {
   next();
 });
 
-
 app.use('/', routes);
 app.use('/users', users);
-
 
 // Set Port
 app.set('port', (process.env.PORT || 7000));

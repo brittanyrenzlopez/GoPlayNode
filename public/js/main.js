@@ -37,7 +37,6 @@ let playlistId = "";
 var url = window.location.href,
     token = url.match(/\#(?:access_token)\=([\S\s]*?)\&/)[1];
 console.log(token);
-let access = "BQBWWzinKWSoBcbd6dyLj7IGRHDA6lDTjr7HW3PWsaal6khHw14dKZWRgXJzPOuq-IaFQCnt-CETfqzjRpdQkneFPNvvyFN7ItFcsxQ5ivVAQaqHxsCWNLV0RW1Ziy70sxnfHLPsSbDOpmmPw-f3abzk-MKb0l8Qnyw2e9Oxq3Io_Ivqkg4JeFG3NmLAL7MAS5BaovdxXM7qt4VPx4e-Tfd00-ufB93UKObJxqc7qvgr01l5SpNOlUb3X1dfJEfN";
 
 app.getArists = (artist) => $.ajax({
   url: 'https://api.spotify.com/v1/search',
@@ -49,7 +48,6 @@ app.getArists = (artist) => $.ajax({
     access_token: token
   }
 });
-
 
 // Get Albums
 app.getArtistAlbums = (artistId) => $.ajax({
@@ -185,7 +183,6 @@ const getRandomTrack = (trackArray) => {
   return trackArray[randoNum];
 }
 
-
 // Allow user to enter artist names
 app.events = function() {
   $('#search-btn').on('click', function(e) {
@@ -265,5 +262,4 @@ function SpotifyLogin() {
             });
     });
 };
-
 $(listen);
