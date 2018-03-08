@@ -5,7 +5,7 @@ Play Domain is an application that uses Spotify to allow a user to generate a pl
 choosing. Once they have signed up, the user will log in to their very own Spotify account then input their artists. The playlist will be
 created and added to their library, allowing them to listen in browser or on the official Spotify app.
 
-Instructions for navigating Play Domain can be found on the Play Domain [homepage](https://playdomain.herokuapp.com/).
+Instructions for navigating Play Domain can be found on the [homepage](https://playdomain.herokuapp.com/).
 
 ![alt tag="Home"](https://i.imgur.com/hTL4GhF.png)
 ![alt tag="Register"](https://i.imgur.com/0QBTSrG.png)
