@@ -83,7 +83,6 @@ passport.use(new LocalStrategy(
    });
   }));
 
-
 passport.serializeUser(function(user, done) {
   done(null, user.id);
 });
@@ -100,12 +99,6 @@ router.post('/login',
     res.redirect('/');
   });
 
-router.post('/show',
-  passport.authenticate('local', {successRedirect:'/', failureRedirect:'/users/login',failureFlash: true}),
-  function(req, res) {
-    res.redirect('/show');
-  });
-
 router.get('/logout', function(req, res){
 	req.logout();
 
@@ -113,7 +106,5 @@ router.get('/logout', function(req, res){
 
 	res.redirect('/');
 });
-
-
 
 module.exports = router;

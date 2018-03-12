@@ -1,6 +1,3 @@
-//Spotify Client ID: 812eeebca2a145988f7f5099e1761808
-//Spotify Client Secret: 04cc698bfb7b4e7ab14ec5600cac73a2
-
 // close out content display
 function lose() {
   document.getElementById('container').style.display="none";
@@ -36,8 +33,8 @@ let userId = "";
 let playlistId = "";
 var url = window.location.href,
     token = url.match(/\#(?:access_token)\=([\S\s]*?)\&/)[1];
-console.log(token);
 
+// Artist search
 app.getArists = (artist) => $.ajax({
   url: 'https://api.spotify.com/v1/search',
   method: 'GET',
@@ -131,7 +128,6 @@ app.retreiveArtistTracks = function(artistAlbums) {
       .map(ids => app.getArtistTracks(ids));
     app.buldPlayList(albumIds);
     // albums
-    console.log(albumIds, "album Id");
   });
 };
 //get tracks for playlist
@@ -143,18 +139,13 @@ app.buldPlayList = function(albumsIds) {
         .map(item => item.items)
         .reduce(flatten,[])
         .map(item => item.uri);
-
-        console.log(playlistId);
         
         const randomTracks = [];
         for(let i=0; i< 30; i++) {
           randomTracks.push(getRandomTrack(tracksResults));
         }
-
         let songs = randomTracks.join();
         app.addSongs(songs, playlistId);
-        console.log(songs);
-
     });
 };
 // add tracks to playlist
@@ -166,7 +157,6 @@ app.addSongs = function (songs, playlistId) {
     dataType: 'json',
     method: 'POST',
     success: function(data) {
-      console.log(data);
       $('.playlist').html(`<iframe src="https://open.spotify.com/embed?uri=spotify:user:${userId}:playlist:${playlistId}&theme=white&view=coverart" width="300" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>`);
     }
   })
@@ -207,8 +197,6 @@ app.init = function() {
 $(app.init);
 
 // Log in to Spotify
-
-
 function SpotifyLogin() {
     
   function login(callback) {

@@ -23,7 +23,7 @@
       </div>
   </div>
 </header>
-
+<!-- show if logged in -->
 {{#if user}}            
 <section class="download bg-primary text-center" id="download" role="content">
   <h2 id="first">First, log in to Spotify</h2>
@@ -31,11 +31,11 @@
 
     <h2 id="find">Then Enter Your Artists</h2>
 <form class="search-form" role="search">
-    <input type="text" class="search" placeholder="ex: Radiohead, Lorde, Foals">
+    <input type="text" class="search" placeholder="ex: The Beatles, Coldplay, Foals">
     <button type="button" class="btn btn-outline btn-xl" id="search-btn">Search</button>
 </form>
 
-<!-- Content Display -->
+<!-- content display -->
 <div id="container" style="display:none;" role="contentinfo">
       <button type="button" class="closing" onclick="lose();"></button>
           <div class="playlist">
