@@ -81,39 +81,6 @@ app.use('/users', users);
 // Set Port
 app.set('port', (process.env.PORT || 7000));
 
-let server;
-
-function runServer(){
-  const port = process.env.PORT || 8000;
-  return new Promise((resolve, reject) => {
-    server = app.listen(port, () => {
-      console.log(`Your app is on port ${port}`);
-      resolve(server);
-    }).on('error', err => {
-      reject(err)
-    });
-  });
-}
-
-function closeServer() {
-  return new Promise((resolve, reject) => {
-    console.log('Closing app');
-    server.close(err => {
-      if (err) {
-        reject(err);
-        return;
-      }
-      resolve();
-    });
-  });
-}
-
-if (require.main === module) {
-  runServer().catch(err => console.error(err));
-};
-
-module.exports = {app, runServer, closeServer}
-
 // Start server
 app.listen(app.get('port'), function(){
 	console.log('Server started on port '+app.get('port'));
