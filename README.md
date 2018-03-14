@@ -12,8 +12,8 @@ Instructions for navigating Play Domain can be found on the [homepage](https://p
 ![alt tag="Login"](https://i.imgur.com/K1ng9AL.png)
 ![alt tag="Playlist Instruction"](https://i.imgur.com/YhXNOqC.png)
 ![alt tag="Spotify Login"](https://i.imgur.com/7dduoSE.png)
-![alt tag="Playlist"](https://i.imgur.com/88gAvZa.png)
-![alt tag="in Spotify app"](https://i.imgur.com/lNJsdZY.png)
+![alt tag="Playlist"](https://i.imgur.com/4F8fGJs.png)
+![alt tag="in Spotify app"](https://i.imgur.com/edGe3it.png)
 
 ##### Technologies
 - HTML
