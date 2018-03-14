@@ -96,13 +96,30 @@ a {
   text-shadow: -1px -1px 15px rgba(255, 255, 0, 0.52);
 }
 
+#demo {
+  font-size: 25px;
+  margin-top: 40px;
+  font-style: italic;
+  line-height: 30px;
+  text-shadow: 5px 5px 6px #000, 1px 1px #000, 1px 1px rgba(255, 255, 0, 0.52);
+}
+
+#backing {
+  position: relative;
+    width:520px;
+    height:60px;
+    background: rgba(24,24,24, 0.5);
+    box-shadow: 0 0 5px 5px rgba(32,32,32, 0.5);
+    margin: auto;
+    top: -30px;
+}
+
 #download {
   width: 100%;
-  min-width: 100%;
   color: white;
   background: url(https://i.imgur.com/mDMj2AO.jpg) no-repeat;
   background-size: cover;
-  height: 600px;
+  height: 700px;
 }
 
 h2 {

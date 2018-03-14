@@ -10,14 +10,12 @@ router.get('/register', function(req, res){
 	res.render('register');
 });
 
-module.exports = router;
 
 // Login Route
 router.get('/login', function(req, res){
 	res.render('login');
 });
 
-module.exports = router;
 
 // Resgister User
 router.post('/register', function(req, res){

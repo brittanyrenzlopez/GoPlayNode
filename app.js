@@ -1,4 +1,5 @@
 var express = require('express');
+// core module
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
@@ -20,7 +21,7 @@ var users = require('./routes/users');
 // Init App
 var app = express();
 
-// View Engine
+// View Engine, current directory to handlebars template
 app.set('views', path.join(__dirname, 'views'));
 app.engine('handlebars', exphbs({defaultLayout:'layout'}));
 app.set('view engine', 'handlebars');
@@ -113,6 +114,7 @@ if (require.main === module) {
 
 module.exports = {app, runServer, closeServer}
 
+// Start server
 app.listen(app.get('port'), function(){
 	console.log('Server started on port '+app.get('port'));
 });
