@@ -201,7 +201,7 @@ function SpotifyLogin() {
     
   function login(callback) {
   var CLIENT_ID = '812eeebca2a145988f7f5099e1761808';
-  var REDIRECT_URI = 'http://localhost:7000/';
+  var REDIRECT_URI = 'https://playdomain.herokuapp.com/';
   function getLoginURL(scopes) {
   return 'https://accounts.spotify.com/authorize?client_id=' + CLIENT_ID +
       '&redirect_uri=' + encodeURIComponent(REDIRECT_URI) +
