@@ -96,7 +96,7 @@ a {
   text-shadow: -1px -1px 15px rgba(255, 255, 0, 0.52);
 }
 
-#demo {
+.demo {
   font-size: 25px;
   margin-top: 40px;
   font-style: italic;
@@ -208,7 +208,6 @@ width: 200px;
 height:50px;
 }
 
-/* Search Form*/
 .search-form {
   max-width:380px;
   margin:225px auto;
