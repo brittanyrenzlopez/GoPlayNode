@@ -175,7 +175,7 @@ color: #d3d3d3;
 
 input::-webkit-input-placeholder {color: #d3d3d3 !important;}
 
- @media screen and (min-width : 320px) and (max-width : 480px) {
+  @media only screen and (max-width: 480px) {
   html, body{ 
     background: url(https://i.imgur.com/DkVYTXa.jpg) no-repeat 50% 50%;
     background-size: cover;
