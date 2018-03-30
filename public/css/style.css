@@ -259,7 +259,7 @@ input:-webkit-autofill {
  }
 
  @media screen and (min-width : 320px) and (max-width : 480px) {
-  body{ 
+  html, body{ 
     background: url(https://i.imgur.com/DkVYTXa.jpg) no-repeat 50% 50%;
     background-size: cover;
    background-attachment: fixed;
